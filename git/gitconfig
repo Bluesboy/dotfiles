@@ -1,0 +1,6 @@
+[core]
+	autocrlf = true
+	excludesfile = C:\\Users\\shamil\\Documents\\gitignore_global.txt
+[user]
+	name = Shamil Sattarov
+	email = ssattarov@plussell.org
