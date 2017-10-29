@@ -1,5 +1,5 @@
 [core]
-	autocrlf = true
+	autocrlf = input
 	excludesfile = C:\\Users\\shamil\\Documents\\gitignore_global.txt
 [user]
 	name = Shamil Sattarov

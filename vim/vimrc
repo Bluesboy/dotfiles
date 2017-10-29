@@ -14,13 +14,13 @@ set bs=indent,start
 
 syntax on
 set expandtab
-set tabstop=4
+set tabstop=2
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
-"nnoremap / /\v 
+nnoremap / /\v 
 
 " Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.vim'
@@ -73,15 +73,15 @@ Plug 'drbraden/near-twilight-256'
 call plug#end()
 
 
-if !has("gui_running")
-    set term=xterm
-    "set term=pcansi
-    set t_Co=256
-    let &t_AB="\e[48;5;%dm"
-    let &t_AF="\e[38;5;%dm"
-    colorscheme twilight256
-    set background=dark
-endif
+"if !has("gui_running")
+    "set term=cygwin
+    ""set term=pcansi
+    "set t_Co=256
+    "let &t_AB="\e[48;5;%dm"
+    "let &t_AF="\e[38;5;%dm"
+    "colorscheme twilight256
+    "set background=dark
+"endif
 
 "____________________Mappings________________________________________________
 map <C-n> :NERDTreeToggle<CR>
