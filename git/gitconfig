@@ -1,6 +1,7 @@
 [core]
 	autocrlf = input
 	excludesfile = C:\\Users\\shamil\\Documents\\gitignore_global.txt
+	editor = /usr/bin/vim
 [user]
 	name = Shamil Sattarov
 	email = ssattarov@plussell.org
