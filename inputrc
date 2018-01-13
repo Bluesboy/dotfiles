@@ -1,0 +1,18 @@
+# CTRL + s to insert "sudo " at the start of line
+"\es": "\C-asudo \C-e"
+
+# CTRL + UP/DOWN to search same command
+"\e[1;5A": history-search-backward
+"\e[1;5B": history-search-forward
+
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# Faster completion
+set colored-completion-prefix On
+set show-all-if-ambiguous On
+
+#"\e[A": history-search-backward
+#"\e[B": history-search-forward
+#"\e[C": forward-char
+#"\e[D": backward-char
