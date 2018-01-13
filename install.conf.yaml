@@ -14,7 +14,7 @@
 
 - link:
     ~/.vimrc: vimrc
-    ~/.gitconfig: git/gitconfig
+    ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.bashrc: bashrc
     ~/.tmux.conf: tmux.conf
