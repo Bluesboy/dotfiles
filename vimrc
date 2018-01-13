@@ -1,28 +1,45 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+if has('autocmd')
+  filetype plugin indent on
+endif
+
+if has('syntax') && !exists('g:syntax_on')
+  syntax enable
+endif
+
+set autoread
 
 "Turn on line numbers
 set number
+"
 "Copy/Paste in OS clipboard
 set clipboard=unnamed
+"
 "Automatically put selection in visual mode to clipboard, (seems to be broken)
 set go+=a
+
 "Set '<' and '>' to match
 set matchpairs+=<:>
+
 "Backspace do not delete 'eol'
 set bs=indent,start
 
-syntax on
+"Soft Indentation
+set autoindent
 set expandtab
-set tabstop=2
-set hlsearch
+set shiftwidth=2
+set softtabstop=2
+
+"Incremental search with smartcase and backspace behavior
 set incsearch
 set ignorecase
 set smartcase
+nmap  <silent> <BS> :nohlsearch<CR>
 
 " Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.vim'
 let &runtimepath.=','.vimDir
+
+set nrformats-=octal
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
@@ -35,6 +52,48 @@ if has('persistent_undo')
 	set undolevels=5000         " How many undos
 	set undoreload=10000        " number of lines to save for undo
 endif
+
+if &history < 1000
+  set history=1000
+endif
+
+set laststatus=2
+set ruler
+set wildmenu
+
+if !&scrolloff
+  set scrolloff=1
+endif
+if !&sidescrolloff
+  set sidescrolloff=5
+endif
+set display+=lastline
+
+if &encoding ==# 'latin1' && has('gui_running')
+  set encoding=utf-8
+endif
+
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
+
+if has('path_extra')
+  setglobal tags-=./tags tags-=./tags; tags^=./tags;
+endif
+
+if &tabpagemax < 50
+  set tabpagemax=50
+endif
+if !empty(&viminfo)
+  set viminfo^=!
+endif
+set sessionoptions-=options
+
+" vim:set ft=vim et sw=2:
 
 "set term=pcansi
 "set t_Co=256
@@ -57,9 +116,11 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " On-demand loading
+"Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'Valloric/YouCompleteMe'
@@ -67,6 +128,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/twilight256.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'drbraden/near-twilight-256'
+Plug 'scrooloose/nerdcommenter'
 " Initialize plugin system
 call plug#end()
 
@@ -83,8 +145,12 @@ endif
 
 "____________________Mappings________________________________________________
 map <C-n> :NERDTreeToggle<CR>
-nmap    <silent>   <BS>    :nohlsearch<CR>
 
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+
+"PowerLine configuration
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
