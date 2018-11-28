@@ -41,3 +41,8 @@ fi
 if [ -x "$(command -v kubectl)" ]; then
   source <(kubectl completion bash)
 fi
+
+#virtualenvwrapper
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source ~/.local/bin/virtualenvwrapper.sh
