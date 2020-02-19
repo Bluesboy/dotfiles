@@ -39,7 +39,9 @@ fi
 # Add kubectl completion if kubectl in installed
 
 if [ -x "$(command -v kubectl)" ]; then
+  alias k=kubectl
   source <(kubectl completion bash)
+  source <(kubectl completion bash | sed 's/kubectl/k/g')
 fi
 
 #virtualenvwrapper
