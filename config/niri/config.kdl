@@ -488,7 +488,6 @@ workspace "misc" {
 
 spawn-at-startup "opera"
 spawn-sh-at-startup "~/.config/niri/wallpapper.sh -d ~/Pictures/wallpapers/ -s 30"
-spawn-sh-at-startup "wl-paste -p --watch wl-copy"
 // Tray apps wait for waybar's StatusNotifierWatcher before launching, otherwise
 // Electron apps (Slack, Element) lose their tray icon in the startup race.
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh Telegram"

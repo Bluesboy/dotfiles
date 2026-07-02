@@ -49,10 +49,7 @@ config.enable_wayland = false
 
 config.keys = {
   -- paste from the clipboard
-  -- { key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
-
-  -- paste from the primary selection
-  { key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("PrimarySelection") },
+  { key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
   { key = "'", mods = "CTRL|SHIFT", action = act.Hide },
   { key = "t", mods = "SUPER", action = act.DisableDefaultAssignment },
   { key = "Enter", mods = "SHIFT", action = act.SendString("\x1b\r") },

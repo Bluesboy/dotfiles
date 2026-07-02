@@ -262,6 +262,11 @@
       state: present
     become: true
 
+  - name: "Enable GTK primary selection paste"
+    community.general.dconf:
+      key: /org/gnome/desktop/interface/gtk-enable-primary-paste
+      value: "true"
+
   - name: "Symlink .gnupg configuration"
     ansible.builtin.file:
       src: "{{ playbook_dir }}/config/gnupg/gpg-agent.conf"
