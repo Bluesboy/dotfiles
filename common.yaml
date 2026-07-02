@@ -103,6 +103,7 @@
       - forgejo-cli # CLI application for interacting with Forgejo
       - fzf # Command-line fuzzy finder
       - gdu # Fast disk usage analyzer
+      - git # The fast distributed version control system
       - git-delta # A syntax-highlighting pager for git
       - github-cli # The GitHub CLI
       - go-yq # Portable command-line YAML processor
@@ -118,7 +119,7 @@
       - obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
       - oha # Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animationq
       - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant.
-      - p7zip # Command-line file archiver with high compression ratio
+      - 7zip # Command-line file archiver with high compression ratio
       - parallel # A shell tool for executing jobs in parallel
       - pcmanfm # Extremely fast and lightweight file manager (GTK+ 3 version)
       - rebuild-detector # Detects which packages need to be rebuilt

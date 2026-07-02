@@ -153,7 +153,6 @@
       - cockpit # A systemd web based user interface for Linux servers
       - cockpit-machines # Cockpit UI for virtual machines
       - cockpit-podman # Cockpit UI for podman containers
-      - cockpit-pcp # Cockpit support for reading PCP metrics and loading PCP archives
       - cockpit-storaged # Cockpit user interface for storage, using udisks
       - cockpit-docker # Cockpit UI for docker containers
       state: present

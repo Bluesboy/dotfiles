@@ -174,7 +174,7 @@
       name:
       - ast-grep # CLI tool for code structural search, lint and rewriting
       - eslint # An AST-based pattern checker for JavaScript
-      - flake8 # The modular source code checker
+      - python-flake8 # The modular source code checker
       - prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
       - python-black # Uncompromising Python code formatter
       - shellcheck # Shell script analysis tool
