@@ -9,6 +9,7 @@
     - mako
     - niri
     - rofi
+    - vicinae
     - waybar
     - ai-quota-waybar
     - xdg-desktop-portal

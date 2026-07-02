@@ -1,0 +1,36 @@
+// Deliberate vicinae settings managed in dotfiles.
+// settings.json imports this file; values written there by the vicinae GUI
+// take precedence over these until manually reconciled.
+{
+   "font": {
+      "rendering": "qt",
+      "normal": {
+         "size": 11
+      }
+   },
+   "telemetry": {
+      "system_info": false
+   },
+   "launcher_window": {
+      "opacity": 0.7
+   },
+   "favorites": [],
+   "providers": {
+      "applications": {
+         "preferences": {
+            "paths": [
+               "/home/bluesboy/.local/share/applications",
+               "/usr/local/share/applications",
+               "/usr/share/applications"
+            ]
+         }
+      },
+      "clipboard": {
+         "entrypoints": {
+            "history": {
+               "enabled": false
+            }
+         }
+      }
+   }
+}

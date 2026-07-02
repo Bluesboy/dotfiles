@@ -1,0 +1,9 @@
+// Deliberate configuration lives in user.jsonc (see the imports array).
+// The vicinae GUI writes its changes into this file; keep it minimal and
+// move anything worth keeping into user.jsonc.
+{
+   "$schema": "https://vicinae.com/schemas/config.json",
+   "imports": [
+      "./user.jsonc"
+   ]
+}
