@@ -9,11 +9,30 @@
       name:
       - pipewire # Low-latency audio/video router and processor
       - pipewire-alsa # Low-latency audio/video router and processor - ALSA configuration
+      - pipewire-jack # Low-latency audio/video router and processor - JACK replacement
       - pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
       - wireplumber # Session / policy manager implementation for PipeWire
       - helvum # GTK patchbay for PipeWire
       state: present
     become: true
+
+  - name: "Install audio production packages"
+    community.general.pacman:
+      name:
+      - ardour # Professional-grade digital audio workstation
+      - carla # Audio plugin host
+      - noise-repellent # An lv2 plugin for broadband noise reduction
+      state: present
+    become: true
+
+  - name: "Install audio plugins from AUR"
+    kewlfft.aur.aur:
+      name:
+      - aether.lv2 # An algorithmic reverb based on Cloudseed
+      use: "{{ aur_helper }}"
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
 
   - name: "Install Bluez"
     community.general.pacman:
