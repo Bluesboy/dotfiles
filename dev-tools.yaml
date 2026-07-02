@@ -22,7 +22,6 @@
   - name: "Install core developer packages"
     community.general.pacman:
       name:
-      - base-devel # Basic tools to build Arch Linux packages
       - bats # Bash Automated Testing System
       - go-task # A task runner written in Go
       - mise # The front-end to your dev env
@@ -38,21 +37,6 @@
       - tenv-bin # OpenTofu, Terraform, Terragrunt, Terramate and Atmos version manager, written in Go
       - ueberzugpp # Command line utility which allows to display images in the terminal, written in C++
       use: "{{ aur_helper }}"
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
-
-  - name: "Install Yay"
-    kewlfft.aur.aur:
-      name: yay # Yet another yogurt. Pacman wrapper and AUR helper written in go
-      use: makepkg
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
-
-  - name: "Install Paru"
-    kewlfft.aur.aur:
-      name: paru-git # Feature packed AUR helper
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"

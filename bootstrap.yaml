@@ -35,3 +35,36 @@
       mode: "0440"
       validate: "visudo -cf %s"
     become: true
+
+  - name: "Disable debug packages in makepkg builds"
+    ansible.builtin.copy:
+      dest: /etc/makepkg.conf.d/nodebug.conf
+      content: |
+        OPTIONS=(strip docs !libtool !staticlibs emptydirs zipman purge !debug lto)
+      owner: root
+      group: root
+      mode: "0644"
+    become: true
+
+  - name: "Install AUR build prerequisites"
+    community.general.pacman:
+      name:
+      - base-devel # Basic tools to build Arch Linux packages
+      - git # The fast distributed version control system
+      state: present
+    become: true
+
+  - name: "Install Yay"
+    kewlfft.aur.aur:
+      name: yay # Yet another yogurt. Pacman wrapper and AUR helper written in go
+      use: makepkg
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
+
+  - name: "Install Paru"
+    kewlfft.aur.aur:
+      name: paru-git # Feature packed AUR helper
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
