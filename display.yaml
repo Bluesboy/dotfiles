@@ -28,19 +28,20 @@
   - name: "Install Wayland"
     community.general.pacman:
       name:
-      - wayland # A computer display server protocol
-      - xorg-xwayland # run X clients under wayland
-      - wayland-protocols # Specifications of extended Wayland protocols
-      - wl-clipboard # Command-line copy/paste utilities for Wayland
       - libva # Video Acceleration (VA) API for Linux
-      - wlr-randr # Utility to manage outputs of a Wayland compositor
-      - xwayland-satellite # Xwayland outside your Wayland
       - qt5-wayland # Provides APIs for Wayland
       - qt6-wayland # Provides APIs for Wayland
+      - wayland # A computer display server protocol
+      - wayland-protocols # Specifications of extended Wayland protocols
+      - wl-clipboard # Command-line copy/paste utilities for Wayland
+      - wlr-randr # Utility to manage outputs of a Wayland compositor
+      - xclip # Command line interface to the X11 clipboard, for XWayland clients
       - xdg-desktop-portal-gnome # Backend implementation for xdg-desktop-portal for the GNOME desktop environment
       - xdg-desktop-portal-gtk # A backend implementation for xdg-desktop-portal using GTK
-      - xdg-desktop-portal-wlr # xdg-desktop-portal backend for wlroots
       - xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
+      - xdg-desktop-portal-wlr # xdg-desktop-portal backend for wlroots
+      - xorg-xwayland # run X clients under wayland
+      - xwayland-satellite # Xwayland outside your Wayland
       state: present
     become: true
 
