@@ -61,7 +61,7 @@
 
   - name: "Show upgraded packages"
     ansible.builtin.debug:
-      var: pacman_upgrade.packages
+      msg: "{{ pacman_upgrade.packages | sort }}"
     when: pacman_upgrade.packages | default([]) | length > 0
 
   - name: "Create symlink for configuration directories"
