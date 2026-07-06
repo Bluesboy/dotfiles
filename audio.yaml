@@ -13,6 +13,7 @@
       - pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
       - wireplumber # Session / policy manager implementation for PipeWire
       - helvum # GTK patchbay for PipeWire
+      - wiremix # A simple TUI audio mixer for PipeWire
       state: present
     become: true
 
