@@ -323,7 +323,7 @@
       - google-cloud-cli-gke-gcloud-auth-plugin # A google-cloud-sdk component that provides a kubectl authentication plugin for GKE.
       - google-cloud-cli-gsutil # Cloud Storage Command Line Tool: gsutil is not the recommended CLI for Cloud Storage
       - helm-ls-bin # Language server for Helm
-      - k0sctl-bin # A bootstrapping and management tool for k0s clusters.
+      - k0sctl # A bootstrapping and management tool for k0s clusters.
       - kcl-lang # KCL Programming Language
       - krew # Krew is the package manager for kubectl plugins
       - rancher-k3d-bin # Little helper to run Rancher Labs k3s in Docker
