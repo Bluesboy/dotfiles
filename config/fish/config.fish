@@ -87,6 +87,7 @@ if status --is-interactive
   abbr --add --global -- ck 'kubectl get pod --all-namespaces | grep -i \'terminated\|nodeshutdown\|error\|nodeaffinity\|completed\' | awk \'{ print $1, $2 }\' | xargs -n2 kubectl delete pod -n'
   abbr --add --global -- tm 'tmux'
   abbr --add --global -- c 'clear'
+  abbr --add --global -- wm 'wiremix'
   abbr --add --global -- v 'vim'
 end
 
