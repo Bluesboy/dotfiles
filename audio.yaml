@@ -19,12 +19,10 @@
   - name: "Install Pipewire"
     community.general.pacman:
       name:
-      - helvum # GTK patchbay for PipeWire
       - pipewire # Low-latency audio/video router and processor
       - pipewire-alsa # Low-latency audio/video router and processor - ALSA configuration
       - pipewire-jack # Low-latency audio/video router and processor - JACK replacement
       - pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
-      - qpwgraph # PipeWire Graph Qt GUI Interface
       - wiremix # A simple TUI audio mixer for PipeWire
       - wireplumber # Session / policy manager implementation for PipeWire
       state: present
@@ -35,7 +33,9 @@
       name:
       - ardour # Professional-grade digital audio workstation
       - carla # Audio plugin host
+      - lsp-plugins # Collection of open-source plugins
       - noise-repellent # An lv2 plugin for broadband noise reduction
+      - x42-plugins # Professional audio processing units available as LV2-plugin and JACK-application
       state: present
     become: true
 
