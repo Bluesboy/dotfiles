@@ -32,10 +32,13 @@
     community.general.pacman:
       name:
       - ardour # Professional-grade digital audio workstation
+      - calf # LV2 plug-in suite
       - carla # Audio plugin host
+      - easyeffects # Audio Effects for Pipewire applications
       - lsp-plugins # Collection of open-source plugins
       - noise-repellent # An lv2 plugin for broadband noise reduction
       - x42-plugins # Professional audio processing units available as LV2-plugin and JACK-application
+      - zam-plugins-lv2 # Collection of audio plugins for high-quality processing - LV2 plugins
       state: present
     become: true
 
@@ -43,6 +46,7 @@
     kewlfft.aur.aur:
       name:
       - aether.lv2 # An algorithmic reverb based on Cloudseed
+      - airwindows-lv2 # LV2 port of Airwindows audio plugins
       use: "{{ aur_helper }}"
       state: present
     become: true
