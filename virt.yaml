@@ -47,10 +47,11 @@
     become: true
     become_user: "{{ aur_builder_user }}"
 
-  - name: "Install Kubecolor"
+  - name: "Install Kubernetes Tools"
     kewlfft.aur.aur:
       name:
       - kubecolor # Colorize your kubectl output
+      - kubefwd-bin # kubefwd is a command line utility built to port forward some or all pods within a Kubernetes namespace.
       use: "{{ aur_helper }}"
       state: present
     become: true
@@ -178,6 +179,23 @@
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"
+
+  - name: "Add kubevpn krew index"
+    ansible.builtin.command:
+      cmd: kubectl-krew index add kubevpn https://github.com/kubenetworks/kubevpn.git
+      creates: "{{ ansible_facts['user_dir'] }}/.krew/index/kubevpn"
+
+  - name: "Install and sync Krew plugins"
+    ansible.builtin.include_role:
+      name: michaelwasher.krew
+    vars:
+      krew_bin_path: /usr/sbin/kubectl-krew
+      krew_user: "{{ ansible_facts['user_id'] }}"
+      krew_version: latest
+      krew_plugins:
+      - config-import
+      - gke-credentials
+      - kubevpn/kubevpn
 
   - name: "Configure groups for current user"
     ansible.builtin.user:

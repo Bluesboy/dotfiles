@@ -1,4 +1,8 @@
 ---
+roles:
+- name: michaelwasher.krew
+  src: https://github.com/MichaelWasher/ansible-role-krew
+
 collections:
 - name: community.general
 #AUR

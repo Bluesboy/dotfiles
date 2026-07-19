@@ -23,7 +23,8 @@ bootstrap: ansible/install deps bootstrap/apply ## Install Ansible, collections,
 ansible/install: ## Install Ansible tools into the system
 	sudo pacman -S --needed ansible-core ansible-lint
 
-deps: ## Install Ansible Galaxy collections
+deps: ## Install Ansible Galaxy roles and collections
+	ansible-galaxy role install -r requirements.yaml
 	ansible-galaxy collection install -r requirements.yaml
 
 bootstrap/apply: ## Apply bootstrap playbook
