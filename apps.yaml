@@ -25,7 +25,7 @@
     kewlfft.aur.aur:
       name: ctpv-git # Fast image previews for lf
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -33,7 +33,7 @@
     kewlfft.aur.aur:
       name: archivemount
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -75,7 +75,7 @@
     kewlfft.aur.aur:
       name: pass-git-helper
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -83,7 +83,7 @@
     kewlfft.aur.aur:
       name: opera # A fast and secure web browser
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -128,7 +128,7 @@
       name:
       - wayscriber-bin # Screen annotation tool for Wayland compositors (prebuilt binaries)
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -143,7 +143,7 @@
     kewlfft.aur.aur:
       name: slack-desktop # Slack Desktop (Beta) for Linux
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -156,7 +156,7 @@
     kewlfft.aur.aur:
       name: trgui-ng
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -164,7 +164,7 @@
     kewlfft.aur.aur:
       name: gh-dash # A beautiful CLI dashboard extension for GitHub to display pull requests and issues with filters you care about
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -174,14 +174,14 @@
       - thunderbird # Standalone mail and news reader from mozilla.org
       - thunderbird-i18n-ru # Russian language pack for Thunderbird
       - thunderbird-i18n-en-us # English (US) language pack for Thunderbird
-      state: present
+      state: latest
     become: true
 
   - name: "Install Postman"
     kewlfft.aur.aur:
       name: postman-bin
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -189,7 +189,7 @@
     kewlfft.aur.aur:
       name: git-extras
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -211,6 +211,6 @@
     kewlfft.aur.aur:
       name: stig # TUI and CLI client for the Transmission daemon
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"

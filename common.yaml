@@ -214,7 +214,7 @@
       - sysz # fzf terminal UI for systemctl
       - systemctl-tui # A fast, simple TUI for interacting with systemd services and their logs
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -223,7 +223,7 @@
       name:
       - lazyjournal # TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find and regex support
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -232,6 +232,6 @@
       name:
       - rmlint-git # Tool to remove duplicates and other lint, being much faster than fdupes
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"

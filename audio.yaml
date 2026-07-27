@@ -48,7 +48,7 @@
       - aether.lv2 # An algorithmic reverb based on Cloudseed
       - airwindows-lv2 # LV2 port of Airwindows audio plugins
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 

@@ -8,7 +8,7 @@
     kewlfft.aur.aur:
       name: downgrade # Bash script for downgrading one or more packages to a version in your cache or the A.L.A.
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -16,7 +16,7 @@
     kewlfft.aur.aur:
       name: brave-bin # Web browser that blocks ads and trackers by default
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -24,7 +24,7 @@
     kewlfft.aur.aur:
       name: zoom # Video Conferencing and Web Conferencing Service
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -32,7 +32,7 @@
     kewlfft.aur.aur:
       name: tlrc-bin # Official tldr client written in Rust
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -108,7 +108,7 @@
       - flclashx-bin # Fork of FlClash | A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.
       - clash-verge-rev-bin # Continuation of Clash Verge | A Clash Meta GUI based on Tauri
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -117,7 +117,7 @@
       name:
       - expressvpn # Proprietary VPN client for Linux
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -126,7 +126,7 @@
       name:
       - xfr-bin # A modern iperf3 alternative with a live TUI, multi-client server, and QUIC support
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 

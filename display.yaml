@@ -114,7 +114,7 @@
       name:
       - wttrbar-bin # Weather indicator for Waybar
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -124,7 +124,7 @@
       - codexbar
       - ai-quota-waybar-git
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -147,7 +147,7 @@
       name:
       - pinentry-rofi # rofi-based pinentry implementation
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -156,7 +156,7 @@
       name:
       - vicinae-bin # A focused launcher for your desktop — native, fast, extensible
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -241,7 +241,7 @@
       - ttf-ubuntu-mono-ligaturized-git # Ubuntu Mono font with programming ligatures
       - ttf-ioskeley-mono-nerd # Ioskeley Mono Nerd Font (Hinted) - A patched version for standard screens
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -252,7 +252,7 @@
       name:
       - clipboard # Cut, copy, and paste anything in your terminal.
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 

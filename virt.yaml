@@ -43,7 +43,7 @@
       name:
       - lima-bin # Linux virtual machines, typically on macOS, for running containerd.
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -53,7 +53,7 @@
       - kubecolor # Colorize your kubectl output
       - kubefwd-bin # kubefwd is a command line utility built to port forward some or all pods within a Kubernetes namespace.
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -85,7 +85,7 @@
       name:
       - lazydocker # A simple terminal UI for docker and docker-compose, written in Go with the gocui library.
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -167,7 +167,7 @@
       - cockpit-navigator # A Featureful File Browser for Cockpit
       - cockpit-pacman # Cockpit plugin for Arch Linux package management using alpm.rs
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -176,7 +176,7 @@
       name:
       - kind # Kubernetes IN Docker - local clusters for testing Kubernetes
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -227,7 +227,7 @@
       name:
       - oxker # A simple TUI to view & control Docker containers
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 

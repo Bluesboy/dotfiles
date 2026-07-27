@@ -37,7 +37,7 @@
       - tenv-bin # OpenTofu, Terraform, Terragrunt, Terramate and Atmos version manager, written in Go
       - ueberzugpp # Command line utility which allows to display images in the terminal, written in C++
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -110,7 +110,7 @@
       - python-kaleido-bin # Static image export for web-based visualization libraries with zero dependencies
       - python-plotly # An open-source, interactive graphing library
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -171,7 +171,7 @@
       name:
       - stylua # Code formatter for Lua
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -218,7 +218,7 @@
       - bfg # Removes large or troublesome blobs like git-filter-branch does, but faster.
       - git-koji-bin # An interactive CLI for creating conventional commits
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -247,7 +247,7 @@
       - redisinsight # Desktop manager that provides an intuitive and efficient GUI for Redis, allowing you to interact with your databases, monitor, and manage your data.
       - sqlit # The lazygit of SQL databases - a lightweight TUI for SQL Server, PostgreSQL, MySQL, SQLite, and more
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -265,7 +265,7 @@
       - hoppscotch-bin # Hoppscotch. Open source API development ecosystem
       - posting # The modern API client that lives in your terminal
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -292,7 +292,7 @@
       - viddy # A modern watch command
       - wrk # Modern HTTP benchmarking tool
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -328,7 +328,7 @@
       - krew # Krew is the package manager for kubectl plugins
       - rancher-k3d-bin # Little helper to run Rancher Labs k3s in Docker
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
     notify:
@@ -342,7 +342,7 @@
       - kaskade # A text user interface for Kafka. Interact and consume topics from your terminal in style!
       - kcat-cli # A generic non-JVM producer and consumer for Apache Kafka, think of it as a netcat for Kafka
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -388,7 +388,7 @@
       name:
       - exercism # Command line tool for exercism.io
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -415,7 +415,7 @@
       - qwen-code-bin # Open-source AI agent based on Gemini CLI by QwenLM
       - rtk-bin # CLI proxy that reduces LLM token consumption by 60-90% on common dev commands
       use: "{{ aur_helper }}"
-      state: present
+      state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
 
