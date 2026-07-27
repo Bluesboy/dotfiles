@@ -197,6 +197,19 @@
       - gke-credentials
       - kubevpn/kubevpn
 
+  - name: "Preserve HOME for kubevpn root daemon via sudo"
+    ansible.builtin.copy:
+      dest: /etc/sudoers.d/kubevpn-home
+      content: |
+        # Preserve $HOME through `sudo --preserve-env=HOME` so kubevpn's root daemon
+        # writes its socket under the invoking user's ~/.kubevpn instead of /root/.kubevpn.
+        Defaults env_keep += "HOME"
+      owner: root
+      group: root
+      mode: "0440"
+      validate: "visudo -cf %s"
+    become: true
+
   - name: "Configure groups for current user"
     ansible.builtin.user:
       name: "{{ ansible_facts['user_id'] }}"
