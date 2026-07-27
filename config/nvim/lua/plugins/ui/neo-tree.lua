@@ -8,7 +8,7 @@ return {
   },
   cmd = "Neotree",
   keys = {
-    { "\\", ":Neotree toggle<CR>", desc = "Toggle NeoTree", silent = true },
+    { "\\", ":Neotree focus<CR>", desc = "Focus NeoTree", silent = true },
   },
   opts = {
     window = {
@@ -18,9 +18,10 @@ return {
         ["h"] = "navigate_up",
         ["<bs>"] = "toggle_hidden",
         ["\\"] = "close_window",
-        ["<tab>"] = "next_source",
+        ["<Tab>"] = "next_source",
         ["<S-tab>"] = "prev_source",
         [";"] = "focus_preview",
+        ["<space>"] = "select",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<down>"] = "move_cursor_down",
