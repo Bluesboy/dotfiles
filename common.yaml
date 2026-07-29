@@ -111,6 +111,7 @@
       - iwd # Internet Wireless Daemon
       - jq # Command-line JSON processor
       - lazygit # Simple terminal UI for git commands
+      - less # A terminal based program for viewing text files
       - lynx # A text browser for the World Wide Web
       - mediainfo # Supplies technical and tag information about a video or audio file (CLI interface)
       - navi # An interactive cheatsheet tool for the command-line
