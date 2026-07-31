@@ -1,6 +1,6 @@
 #Do not add new line
 add_newline = false
-scan_timeout = 30
+scan_timeout = 200
 
 palette = "catppuccin_macchiato"
 
