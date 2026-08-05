@@ -406,9 +406,9 @@
       name:
       - ccusage # Analyze coding agent CLI token usage and costs from local data
       - claude-code # An agentic coding tool that lives in your terminal
-      - claude-desktop-native # Unofficial Claude Desktop for Linux
       - codebase-memory-mcp-ui-bin # High-performance code intelligence MCP server with persistent knowledge graph (with UI)
       - crush-bin # A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
+      - herdr # Terminal workspace manager for AI coding agents
       - openai-codex-bin # Arch Linux package for OpenAI's Codex CLI - Auto Updated
       - opencode-bin # The AI coding agent built for the terminal.
       - opencode-qwencode-oauth # Qwen OAuth authentication plugin for opencode with multi-account rotation
