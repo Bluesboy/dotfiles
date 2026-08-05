@@ -33,3 +33,6 @@ default-timeout=3000
 
 [app-name="Thunderbird"]
 default-timeout=5000
+
+[app-name="notify-send"]
+default-timeout=3000
