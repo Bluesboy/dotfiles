@@ -22,8 +22,17 @@ local function get_work_dir(target)
 end
 
 local function tmux_change_dir(dir)
+  -- fs.cwd() hands back a Url userdata while tmux reports a plain string, and
+  -- comparing the two is always unequal, so this check never held and the cd
+  -- went out on every keypress.
+  dir = tostring(dir)
+
   if get_work_dir(2) ~= dir then
-    Command("tmux"):arg({ "send-keys", "-t", "2", "cd '" .. dir .. "'", "C-m" }):spawn()
+    -- C-u leads the cd: the pane may have been left with a half-typed line the
+    -- cd would otherwise glue itself onto. Same send-keys call, so the two
+    -- cannot arrive out of order. Nothing is sent when the directory already
+    -- matches -- an untouched pane keeps whatever was being typed in it.
+    Command("tmux"):arg({ "send-keys", "-t", "2", "C-u", "cd '" .. dir .. "'", "C-m" }):spawn()
   end
 end
 
