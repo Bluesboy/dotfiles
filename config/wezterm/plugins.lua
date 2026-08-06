@@ -28,7 +28,36 @@ local terminal = nil
 -- directory on its own, so only the reused one is ever actually behind.
 local shells = { bash = true, dash = true, fish = true, ksh = true, sh = true, zsh = true }
 
+-- Reaches the tmux pane inside a wezterm pane, in both directions. See the
+-- script for why a pane running tmux cannot be asked directly.
+local tmux_bridge = wezterm.config_dir .. "/tmux-cwd.sh"
+
+local function bridge(...)
+  local ok, stdout = wezterm.run_child_process({ tmux_bridge, ... })
+
+  return ok, (stdout or ""):gsub("%s+$", "")
+end
+
+local function is_shell(pane)
+  local process = pane:get_foreground_process_name()
+
+  return process ~= nil and shells[process:match("[^/\\]+$") or ""] == true
+end
+
 local function pane_cwd(pane)
+  -- A tmux client living in this pane is the authority on the directory: tmux
+  -- does not forward OSC 7 on a plain cd, so wezterm keeps reporting wherever
+  -- tmux was started. The bridge is asked first and simply fails when no client
+  -- is there, which is exactly when OSC 7 is the right answer. Note that
+  -- get_foreground_process_name cannot stand in for this test -- it reports the
+  -- shell that spawned tmux, not tmux.
+  local ok, path = bridge("path", tostring(pane:pane_id()))
+
+  if ok and path ~= "" then
+    -- No host: tmux answers for a pane on this machine by definition.
+    return { path = path }
+  end
+
   local cwd = pane:get_current_working_dir()
 
   -- nil until the shell emits OSC 7; wezterm never guesses the directory.
@@ -39,10 +68,10 @@ local function pane_cwd(pane)
   return { path = cwd.file_path, host = cwd.host }
 end
 
-local function is_shell(pane)
-  local process = pane:get_foreground_process_name()
-
-  return process ~= nil and shells[process:match("[^/\\]+$") or ""] == true
+-- An unknown host on either side means the local machine, which is the case for
+-- anything the tmux bridge answers.
+local function same_host(a, b)
+  return a.host == nil or b.host == nil or a.host == b.host
 end
 
 -- The plugin's own state file. Reading it beats keeping a second record of
@@ -83,14 +112,29 @@ function M.toggle_terminal_with_cwd(window, pane)
 
   local target = window:active_pane()
 
-  if target == nil or target:pane_id() == pane:pane_id() or not is_shell(target) then
+  if target == nil or target:pane_id() == pane:pane_id() then
     return
   end
 
   local to = pane_cwd(target)
 
   -- Already there, or sitting on another host where the path means nothing.
-  if to ~= nil and (to.host ~= from.host or to.path == from.path) then
+  if to ~= nil and (not same_host(from, to) or to.path == from.path) then
+    return
+  end
+
+  -- Keys typed at a pane running tmux reach tmux, not the shell inside it, so
+  -- the cd is handed over through tmux when a client lives there. The script
+  -- repeats the shell and same-directory checks against the pane that will
+  -- actually receive it, and says so: anything but a failed lookup means tmux
+  -- owns this pane and has already decided.
+  local reached, verdict = bridge("send", tostring(target:pane_id()), from.path)
+
+  if reached and verdict ~= "" then
+    return
+  end
+
+  if not is_shell(target) then
     return
   end
 
