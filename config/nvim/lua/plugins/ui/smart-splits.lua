@@ -5,12 +5,43 @@ return {
       ignored_buftypes = { "nofile", "quickfix", "prompt" },
       ignored_filetypes = { "NeoTree" },
       default_amount = 1,
-      at_edge = "wrap",
+      -- Reached only when the nvim window *and* the multiplexer pane are both
+      -- at the edge. Inside tmux there is still a wezterm layer further out,
+      -- so hand the move over to it before falling back to wrapping. Note that
+      -- at_edge = "wrap" would skip the multiplexer edge check entirely and
+      -- never let the move escalate.
+      at_edge = function(ctx)
+        local wezterm_directions = { left = "Left", right = "Right", up = "Up", down = "Down" }
+        local direction = wezterm_directions[ctx.direction]
+
+        -- pcall guards the case of a tmux session detached from wezterm, where
+        -- WEZTERM_PANE is stale and the wezterm CLI is unreachable.
+        if ctx.mux and ctx.mux.type == "tmux" and direction and vim.env.WEZTERM_PANE then
+          local ok, moved = pcall(function()
+            local probe = vim.system({ "wezterm", "cli", "get-pane-direction", direction }):wait()
+
+            if probe.code ~= 0 or vim.trim(probe.stdout or "") == "" then
+              return false
+            end
+
+            vim.system({ "wezterm", "cli", "activate-pane-direction", direction }):wait()
+            return true
+          end)
+
+          if ok and moved then
+            return
+          end
+        end
+
+        ctx.wrap()
+      end,
       float_win_behavior = "previous",
       move_cursor_same_row = false,
       cursor_follows_swapped_bufs = false,
       ignored_events = { "BufEnter", "WinEnter" },
-      multiplexer_integration = "tmux",
+      -- Left unset on purpose: setting it disables auto-detection.
+      -- smart-splits picks the back-end from $TERM_PROGRAM, so nvim inside
+      -- tmux drives tmux, and nvim straight in wezterm drives wezterm.
       disable_multiplexer_nav_when_zoomed = false,
       kitty_password = nil,
       zellij_move_focus_or_tab = false,
