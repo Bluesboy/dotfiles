@@ -11,24 +11,30 @@ return {
       -- at_edge = "wrap" would skip the multiplexer edge check entirely and
       -- never let the move escalate.
       at_edge = function(ctx)
-        local wezterm_directions = { left = "Left", right = "Right", up = "Up", down = "Down" }
-        local direction = wezterm_directions[ctx.direction]
+        -- A zoomed tmux pane fills its whole window, so tmux reports it as
+        -- sitting at every edge at once and smart-splits gives up before even
+        -- trying to move. Ask tmux directly; select-pane unzooms on its way,
+        -- which is what makes the keys work without unzooming by hand first.
+        if ctx.mux and ctx.mux.type == "tmux" and ctx.mux.current_pane_is_zoomed() then
+          ctx.mux.next_pane(ctx.direction)
+          return
+        end
 
-        -- pcall guards the case of a tmux session detached from wezterm, where
-        -- WEZTERM_PANE is stale and the wezterm CLI is unreachable.
-        if ctx.mux and ctx.mux.type == "tmux" and direction and vim.env.WEZTERM_PANE then
-          local ok, moved = pcall(function()
-            local probe = vim.system({ "wezterm", "cli", "get-pane-direction", direction }):wait()
+        -- Hand the move to the script the tmux bindings already use, so the
+        -- ring is described in one place. Doing it here in Lua is what kept
+        -- the ring closing on the tmux panes alone: ctx.mux.next_pane is
+        -- select-pane, which wraps inside tmux before wezterm is ever asked.
+        -- The script also resolves a live wezterm socket, which nvim cannot
+        -- do from its own environment -- the tmux server hands every pane the
+        -- socket of whichever wezterm started it, long dead by now.
+        local directions = { left = "Left", right = "Right", up = "Up", down = "Down" }
+        local direction = directions[ctx.direction]
+        local nav = vim.fn.expand("~/.config/tmux/pane-nav.sh")
 
-            if probe.code ~= 0 or vim.trim(probe.stdout or "") == "" then
-              return false
-            end
-
-            vim.system({ "wezterm", "cli", "activate-pane-direction", direction }):wait()
-            return true
-          end)
-
-          if ok and moved then
+        if ctx.mux and ctx.mux.type == "tmux" and direction and vim.uv.fs_stat(nav) then
+          -- Exit code 3 is the script saying nothing out there took the move,
+          -- which leaves wrapping among nvim's own windows as the answer.
+          if vim.system({ nav, direction }):wait().code ~= 3 then
             return
           end
         end
