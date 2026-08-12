@@ -85,6 +85,7 @@
   - name: "Install common packages"
     community.general.pacman:
       name:
+      - 7zip # Command-line file archiver with high compression ratio
       - atool # A script for managing file archives of various types
       - atuin # Magical shell history
       - bash-completion # Programmable completion for the bash shell
@@ -122,7 +123,6 @@
       - obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
       - oha # Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animationq
       - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant.
-      - 7zip # Command-line file archiver with high compression ratio
       - parallel # A shell tool for executing jobs in parallel
       - pcmanfm # Extremely fast and lightweight file manager (GTK+ 3 version)
       - rebuild-detector # Detects which packages need to be rebuilt
@@ -131,10 +131,11 @@
       - rsync #  A fast and versatile file copying tool for remote and local files
       - smartmontools # Control and monitor S.M.A.R.T. enabled ATA and SCSI Hard Drives
       - starship # The cross-shell prompt for astronauts
+      - superfile # Pretty fancy and modern terminal file manager
       - thefuck # Magnificent app which corrects your previous console command
-      - typst # A markup-based typesetting system for the sciences
       - tmux # A terminal multiplexer
       - trash-cli # Command line trashcan (recycle bin) interface
+      - typst # A markup-based typesetting system for the sciences
       - unarchiver # unar and lsar: Objective-C tools for uncompressing archive files
       - unrar # The RAR uncompression program
       - unzip # For extracting and viewing files in .zip archives
