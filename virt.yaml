@@ -194,8 +194,15 @@
       krew_version: latest
       krew_plugins:
       - config-import
+      - explore
       - gke-credentials
+      - ice
+      - iexec
+      - kc
       - kubevpn/kubevpn
+      - neat
+      - stern
+      - tail
 
   - name: "Preserve HOME for kubevpn root daemon via sudo"
     ansible.builtin.copy:
