@@ -205,11 +205,17 @@
       enabled: true
     become: true
 
-  - name: "Install Tmux Plugin Manager"
-    ansible.builtin.git:
-      repo: https://github.com/tmux-plugins/tpm.git
-      dest: "{{ ansible_facts['user_dir'] }}/.config/tmux/plugins/tpm"
-      version: master
+  - name: "Install tmux tools"
+    kewlfft.aur.aur:
+      name:
+      - lazy-tmux # Fast tmux session manager
+      - sesh-bin # Smart session manager for the terminal
+      - smug-bin # A session manager for tmux written in Go
+      - tmux-plugin-manager # tpm - Tmux Plugin Manager
+      use: "{{ aur_helper }}"
+      state: latest
+    become: true
+    become_user: "{{ aur_builder_user }}"
 
   - name: "Install systemd tools"
     kewlfft.aur.aur:
