@@ -239,3 +239,12 @@
       state: latest
     become: true
     become_user: "{{ aur_builder_user }}"
+
+  - name: "Install hunk"
+    kewlfft.aur.aur:
+      name:
+      - hunk # Terminal diffs for humans and agents
+      use: "{{ aur_helper }}"
+      state: latest
+    become: true
+    become_user: "{{ aur_builder_user }}"
