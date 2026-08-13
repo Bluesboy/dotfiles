@@ -81,6 +81,15 @@
       state: present
     become: true
 
+  - name: "Install Riptide"
+    kewlfft.aur.aur:
+      name:
+      - riptide-bin # A polished terminal internet speed test and realtime bandwidth monitor
+      use: "{{ aur_helper }}"
+      state: latest
+    become: true
+    become_user: "{{ aur_builder_user }}"
+
   - name: "Install LibreOffice"
     community.general.pacman:
       name:
