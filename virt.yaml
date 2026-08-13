@@ -22,13 +22,14 @@
       name:
       - buildkit # A toolkit for converting source code to build artifacts in a repeatable manner
       - cilium-cli # install, manage & troubleshoot Kubernetes clusters running Cilium
-      - docker # Pack, ship and run any application as a lightweight container
       - dive # A tool for exploring layers in a docker image
-      - ducker # A terminal app for managing docker containers
+      - docker # Pack, ship and run any application as a lightweight container
       - docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
       - docker-compose # Fast, isolated development environments using Docker
+      - ducker # A terminal app for managing docker containers
       - helm # The Kubernetes Package Manager
       - k9s # TUI for managing Kubernetes clusters and pods
+      - kubeconform # FAST Kubernetes manifests validator, with support for Custom Resources!
       - kubectl # A command line tool for communicating with a Kubernetes API server
       - kubectx # Utility to manage and switch between kubectl contexts and Kubernetes namespaces
       - nix # A purely functional package manager
