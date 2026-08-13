@@ -326,6 +326,7 @@
       - k0sctl # A bootstrapping and management tool for k0s clusters.
       - kcl-lang # KCL Programming Language
       - krew # Krew is the package manager for kubectl plugins
+      - popeye # Kubernetes cluster resource sanitizer
       - rancher-k3d-bin # Little helper to run Rancher Labs k3s in Docker
       use: "{{ aur_helper }}"
       state: latest
