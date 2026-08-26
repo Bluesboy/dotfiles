@@ -1,0 +1,14 @@
+{
+  "defaultProvider": "openrouter",
+  "defaultModel": "openrouter/free",
+  "defaultThinkingLevel": "medium",
+  "theme": "catppuccin-tui-macchiato",
+  "extensions": [
+    "~/.dotfiles/config/pi/extensions/usage-bars.ts"
+  ],
+  "packages": [
+    "npm:pi-catppuccin-tui",
+    "npm:pi-claude-code-provider"
+  ],
+  "lastChangelogVersion": "0.84.3"
+}
