@@ -342,16 +342,18 @@ animations {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
     // Anchored, so the dropdown's own app-id above does not land here: it needs
     // its full-size defaults, and later rules win over earlier ones.
+    //
+    // This used to carry an empty default-column-width as well, to work around
+    // wezterm ignoring the initial configure and so opening at whatever width
+    // it felt like. r869 honours the configure, and without the override the
+    // global default-column-width applies again.
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
     focus-ring {
     off
   }

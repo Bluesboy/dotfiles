@@ -23,8 +23,6 @@ config.window_padding = {
 
 -- Rendering
 
-config.enable_wayland = true
-
 -- Kept on OpenGL: WebGpu renders the subpixel-antialiased glyphs produced by
 -- freetype_render_target below at a visibly different weight. Both back ends
 -- report 96 dpi and both pick the discrete Radeon on their own, so the renderer
