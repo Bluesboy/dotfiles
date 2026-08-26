@@ -25,7 +25,7 @@
     kewlfft.aur.aur:
       name: ctpv-git # Fast image previews for lf
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -33,7 +33,7 @@
     kewlfft.aur.aur:
       name: archivemount
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -75,15 +75,28 @@
     kewlfft.aur.aur:
       name: pass-git-helper
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
-  - name: "Install Opera"
+  - name: "Install Browsers"
+    community.general.pacman:
+      name:
+      - firefox # Fast, Private & Safe Web Browser
+      - qutebrowser # A keyboard-driven, vim-like browser based on Python and Qt
+      state: present
+    become: true
+
+  - name: "Install browsers from AUR"
     kewlfft.aur.aur:
-      name: opera # A fast and secure web browser
+      name:
+      - brave-bin # Web browser that blocks ads and trackers by default
+      - floorp-bin # Firefox-based web browser focused on performance and customizability
+      - opera # A fast and secure web browser
+      - vieb-bin # Vim Inspired Electron Browser - Vim bindings for the web by design
+      - zen-browser-bin # Zen, a privacy-focused, feature packed Firefox-based web browser
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -92,13 +105,6 @@
       name:
       - browserpass # Native host app for Browserpass, browser extension for zx2c4's pass (password manager)
       - browserpass-chromium # Chromium extension for Browserpass, browser extension for zx2c4's pass (password manager)
-      state: present
-    become: true
-
-  - name: "Install Firefox"
-    community.general.pacman:
-      name:
-      - firefox
       state: present
     become: true
 
@@ -128,7 +134,7 @@
       name:
       - wayscriber-bin # Screen annotation tool for Wayland compositors (prebuilt binaries)
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -143,7 +149,7 @@
     kewlfft.aur.aur:
       name: slack-desktop # Slack Desktop (Beta) for Linux
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -156,7 +162,7 @@
     kewlfft.aur.aur:
       name: trgui-ng
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -164,7 +170,7 @@
     kewlfft.aur.aur:
       name: gh-dash # A beautiful CLI dashboard extension for GitHub to display pull requests and issues with filters you care about
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -181,7 +187,7 @@
     kewlfft.aur.aur:
       name: postman-bin
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -189,7 +195,7 @@
     kewlfft.aur.aur:
       name: git-extras
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -197,6 +203,13 @@
     community.general.pacman:
       name:
       - transmission-cli # Fast, easy, and free BitTorrent client (CLI tools, daemon and web client)
+      state: present
+    become: true
+
+  - name: "Install Cool Retro Term"
+    community.general.pacman:
+      name:
+      - cool-retro-term # A good looking terminal emulator which mimics the old cathode display
       state: present
     become: true
 
@@ -211,6 +224,6 @@
     kewlfft.aur.aur:
       name: stig # TUI and CLI client for the Transmission daemon
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"

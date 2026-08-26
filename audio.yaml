@@ -16,6 +16,15 @@
       group: "{{ ansible_facts['user_gid'] }}"
     loop: "{{ configs }}"
 
+  - name: "Install cliamp"
+    kewlfft.aur.aur:
+      name:
+      - cliamp # A retro terminal music player inspired by Winamp 2.x
+      use: "{{ aur_helper }}"
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
+
   - name: "Install Pipewire"
     community.general.pacman:
       name:
@@ -48,7 +57,7 @@
       - aether.lv2 # An algorithmic reverb based on Cloudseed
       - airwindows-lv2 # LV2 port of Airwindows audio plugins
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 

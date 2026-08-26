@@ -9,8 +9,11 @@
     - feh
     - fish
     - git
+    - lazy-tmux
     - lazygit
     - nvim
+    - opensessions
+    - sesh
     - starship
     - tmux
     - tmux-powerline
@@ -64,6 +67,20 @@
       msg: "{{ pacman_upgrade.packages | sort }}"
     when: pacman_upgrade.packages | default([]) | length > 0
 
+  - name: "Upgrade all AUR packages"
+    kewlfft.aur.aur:
+      upgrade: true
+      use: "{{ aur_helper }}"
+      extra_args: "--ignore zfs-dkms,zfs-utils"
+    become: true
+    become_user: "{{ aur_builder_user }}"
+    register: aur_upgrade
+
+  - name: "Show upgraded AUR packages"
+    ansible.builtin.debug:
+      msg: "{{ aur_upgrade.updated | sort }}"
+    when: aur_upgrade.updated | default([]) | length > 0
+
   - name: "Create symlink for configuration directories"
     ansible.builtin.file:
       src: "{{ playbook_dir }}/config/{{ item }}"
@@ -72,6 +89,14 @@
       owner: "{{ ansible_facts['user_uid'] }}"
       group: "{{ ansible_facts['user_gid'] }}"
     loop: "{{ configs }}"
+
+  - name: "Create symlink for sesh starter"
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/config/sesh/sesh-project-start"
+      dest: "{{ ansible_facts['user_dir'] }}/.local/bin/sesh-project-start"
+      state: link
+      owner: "{{ ansible_facts['user_uid'] }}"
+      group: "{{ ansible_facts['user_gid'] }}"
 
   - name: "Add udev rule for Dactyl"
     ansible.builtin.copy:
@@ -213,7 +238,7 @@
       - smug-bin # A session manager for tmux written in Go
       - tmux-plugin-manager # tpm - Tmux Plugin Manager
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -224,7 +249,7 @@
       - sysz # fzf terminal UI for systemctl
       - systemctl-tui # A fast, simple TUI for interacting with systemd services and their logs
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -233,7 +258,7 @@
       name:
       - lazyjournal # TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find and regex support
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -242,7 +267,7 @@
       name:
       - rmlint-git # Tool to remove duplicates and other lint, being much faster than fdupes
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"
 
@@ -251,6 +276,6 @@
       name:
       - hunk # Terminal diffs for humans and agents
       use: "{{ aur_helper }}"
-      state: latest
+      state: present
     become: true
     become_user: "{{ aur_builder_user }}"

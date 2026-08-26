@@ -21,6 +21,12 @@ config.window_padding = {
   bottom = 0,
 }
 
+-- Cursor glow: slow, smooth pulsing bar instead of a hard on/off blink.
+config.default_cursor_style = "BlinkingBar"
+config.cursor_blink_rate = 800
+config.cursor_blink_ease_in = "EaseInOut"
+config.cursor_blink_ease_out = "EaseInOut"
+
 -- Rendering
 
 -- Kept on OpenGL: WebGpu renders the subpixel-antialiased glyphs produced by
@@ -35,6 +41,9 @@ config.freetype_render_target = "HorizontalLcd"
 -- Matches the 60 Hz panel. Anything above it renders frames the display never
 -- shows, so raise this only to chase stutter, not for smoothness.
 config.max_fps = 60
+
+-- Smoother easing curves for the cursor glow above.
+config.animation_fps = 60
 
 -- Terminal capabilities
 

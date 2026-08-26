@@ -4,6 +4,14 @@
 #Use VI mode by default
 fish_vi_key_bindings
 
+# fish_vi_key_bindings sends its own DECSCUSR cursor-shape escapes on every
+# mode change, which overrides wezterm's default_cursor_style/cursor_blink_rate
+# with a non-blinking cursor unless told otherwise here.
+set -g fish_cursor_default block blink
+set -g fish_cursor_insert line blink
+set -g fish_cursor_replace_one underscore blink
+set -g fish_cursor_visual block blink
+
 #Set Catpuccin Macchiato theme
 fish_config theme choose "catppuccin-macchiato"
 
