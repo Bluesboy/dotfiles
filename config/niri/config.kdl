@@ -265,13 +265,13 @@ layout {
 }
 
 window-rule {
-    // Matched by title: under native Wayland wezterm reports the same app-id for
-    // every window, so wezterm/dropdown.lua pins this title instead.
-    // Only the rules re-evaluated while the window lives take effect here, that
-    // is opacity and focus-ring. Everything applied at open time -- the open-*
-    // directives and the default sizes -- never matches, because wezterm sets
-    // the title after the window is mapped; dropdown.sh redoes them by hand.
-    match title="dropdown"
+    // dropdown.sh starts this one wezterm instance with --class, so it is the
+    // only window carrying this app-id. Matching on it rather than on the title
+    // is what makes the open-* directives and the default sizes apply as the
+    // window opens: the title is pinned by wezterm/dropdown.lua and only lands
+    // once the window is already mapped, which used to show the window as a
+    // tile for a frame before the script floated it.
+    match app-id=r#"^org\.wezfurlong\.wezterm\.dropdown$"#
     open-on-workspace "scratch"
     open-floating true
     open-focused false
@@ -348,10 +348,9 @@ window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
+    // Anchored, so the dropdown's own app-id above does not land here: it needs
+    // its full-size defaults, and later rules win over earlier ones.
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    // The dropdown is a wezterm window too and would otherwise pick up these
-    // settings from here, since later rules win over the one above.
-    exclude title="dropdown"
     default-column-width {}
     focus-ring {
     off

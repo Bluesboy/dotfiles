@@ -1,10 +1,9 @@
 -- Config for the dropdown terminal spawned by niri/dropdown.sh.
 --
--- wezterm 20240203 maps no window at all when --class is combined with its
--- native Wayland backend, so the dropdown cannot be told apart by app_id: it
--- reports the same org.wezfurlong.wezterm as every other window. It therefore
--- reuses the main config verbatim and only pins the window title, which
--- niri/config.kdl matches on instead.
+-- It reuses the main config verbatim. The window is told apart by app_id, which
+-- the script sets with --class, so nothing here has to carry that; the pinned
+-- title is only there to keep the window readable in `niri msg windows` and in
+-- anything else that lists windows by name.
 
 local wezterm = require("wezterm")
 
