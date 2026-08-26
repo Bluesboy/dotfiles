@@ -87,4 +87,18 @@ nav.apply_to_config(config)
 
 plugins.apply_to_config(config)
 
+-- Has to come after the plugins: tabline.wez sets window_decorations = "RESIZE"
+-- unconditionally, so anything set earlier is overwritten.
+--
+-- That value means "no title bar" only where the window system draws one for
+-- us. On Wayland wezterm reads it as a request for client-side decorations and
+-- draws the smithay fallback frame itself -- a plain grey title bar. Only the
+-- default value asks the compositor for server-side decorations, which is what
+-- niri's prefer-no-csd expects, and niri then draws no title bar at all.
+--
+-- The 20240203 release had no Wayland decoration support and ignored the whole
+-- setting, which is why the plugin's value went unnoticed until the r869
+-- snapshot landed.
+config.window_decorations = "TITLE|RESIZE"
+
 return config
