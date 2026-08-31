@@ -497,7 +497,7 @@ workspace "misc" {
 }
 
 spawn-at-startup "opera"
-spawn-at-startup "wpaperd" "-d"
+// wpaperd runs as a user service so systemd restarts it when it crashes.
 // Tray apps wait for waybar's StatusNotifierWatcher before launching, otherwise
 // Electron apps (Slack, Element) lose their tray icon in the startup race.
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh Telegram"
