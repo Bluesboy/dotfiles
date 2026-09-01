@@ -162,13 +162,6 @@
       scope: user
       daemon_reload: true
 
-  - name: "Remove awww"
-    community.general.pacman:
-      name:
-      - awww
-      state: absent
-    become: true
-
   - name: "Install Rofi"
     community.general.pacman:
       name:
