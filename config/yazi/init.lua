@@ -20,8 +20,11 @@ require("starship"):setup({
   flags_after_prompt = true,
 })
 
-require("fg"):setup({
-  default_action = "nvim",
+-- toggle_mode_key is left at its ctrl-t default. Note that wezterm binds plain
+-- CTRL+T to SpawnTab, so if the key never reaches fzf that is the reason.
+require("yafg"):setup({
+  editor = "nvim",
+  file_arg_format = "+{row} {file}",
 })
 
 require("git"):setup()

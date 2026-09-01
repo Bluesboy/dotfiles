@@ -9,11 +9,6 @@ rev = "9ef1254"
 hash = "92fbb5483657fa7976cdf4e0104e18e0"
 
 [[plugin.deps]]
-use = "DreamMaoMao/fg"
-rev = "b9fb819"
-hash = "7d62f2eae04f77d13a21917c169b151b"
-
-[[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
 rev = "8bb639d"
 hash = "8c5f14c09c981a496afaab5184e4aa08"
@@ -72,6 +67,11 @@ hash = "ed359abc14ba915a12e759435ed721ab"
 use = "ahkohd/eza-preview"
 rev = "e8fb6c8"
 hash = "c238595c801caa4f28553b9af8cf8804"
+
+[[plugin.deps]]
+use = "Bluesboy/yafg"
+rev = "337da9d"
+hash = "6df59101fa8564a3ee82ed899c93e2cd"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-macchiato"

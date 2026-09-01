@@ -120,17 +120,17 @@ desc = "Yank to System clipboard"
 
 [[mgr.prepend_keymap]]
 on   = [ "f","g" ]
-run  = "plugin fg"
-desc = "find file by content (fuzzy match)"
+run  = "plugin yafg"
+desc = "find file by content (ctrl-t toggles ripgrep/fuzzy match)"
 
 [[mgr.prepend_keymap]]
 on   = [ "f","G" ]
-run  = "plugin fg -- rg"
+run  = "search --via=rg"
 desc = "find file by content (ripgrep match)"
 
 [[mgr.prepend_keymap]]
 on   = [ "f","f" ]
-run  = "plugin fg -- fzf"
+run  = "search --via=fd"
 desc = "find file by filename"
 
 [[mgr.prepend_keymap]]
