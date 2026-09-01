@@ -30,7 +30,7 @@ group = "git"
 
 [[plugin.prepend_previewers]]
 mime = "application/bittorrent"
-run = "torrent-preview"
+run  = 'piper -- transmission-show "$1"'
 
 [[plugin.prepend_previewers]]
 url  = "*.md"

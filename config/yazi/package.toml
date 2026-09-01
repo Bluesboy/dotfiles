@@ -59,11 +59,6 @@ rev = "aaec6e2"
 hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
 
 [[plugin.deps]]
-use = "kirasok/torrent-preview"
-rev = "d745df6"
-hash = "cf91ea69fa7626160d7246dbda0ea545"
-
-[[plugin.deps]]
 use = "pirafrank/what-size"
 rev = "ec94d9a"
 hash = "4b546f609ab8630a083cecf9ab5091d2"
