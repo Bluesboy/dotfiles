@@ -1,0 +1,75 @@
+## Atuin keeps shell history in a local SQLite database.
+##
+## This machine runs Atuin local-only: `atuin login` is never used, so no
+## account, no encryption key exchange and no server ever sees the history.
+## Everything below is documented in `atuin default-config`.
+
+## Never contact a sync server.
+auto_sync = false
+
+## No update check on startup either; pacman owns the package.
+update_check = false
+
+## Interactive search.
+search_mode = "fuzzy"
+filter_mode = "global"
+style = "compact"
+inline_height = 20
+show_preview = true
+max_preview_height = 8
+
+## The up key would otherwise inherit a full screen interface and fuzzy
+## matching, neither of which suits a key that used to do a quick prefix search
+## over the last few commands. It gets a small window and prefix matching,
+## while Ctrl+R stays fuzzy and full size. The filter mode is left inheriting
+## "global" on purpose: that is what makes every pane share one past.
+inline_height_shell_up_key_binding = 10
+search_mode_shell_up_key_binding = "prefix"
+
+## Escape restores the command line as it was before the search.
+exit_mode = "return-original"
+
+## Enter and Tab both put the entry on the prompt for review instead of
+## running it straight away. Flip to true to have Enter execute immediately.
+enter_accept = false
+
+## Built-in regexes for AWS keys, GitHub PATs, Slack tokens and Stripe keys.
+secrets_filter = true
+
+## Extra commands to keep out of the database. These are unanchored regexes.
+## The leading-space rule restores the familiar "prefix with a space to hide
+## this command" habit, which Atuin does not get from fish for free: it hooks
+## fish_preexec and therefore sees commands fish itself refuses to record.
+history_filter = [
+  "^ ",
+  "^pass ",
+  "^gpg ",
+]
+
+[stats]
+## Count `kubectl get` and `git commit` separately rather than lumping them
+## under the bare binary, and ignore the sudo wrapper entirely.
+common_subcommands = [
+  "ansible",
+  "cargo",
+  "docker",
+  "gcloud",
+  "git",
+  "go",
+  "helm",
+  "kubectl",
+  "nix",
+  "npm",
+  "pacman",
+  "paru",
+  "systemctl",
+  "terraform",
+  "tmux",
+]
+common_prefix = ["sudo"]
+ignored_commands = [
+  "cd",
+  "clear",
+  "ls",
+  "z",
+]

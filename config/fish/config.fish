@@ -21,6 +21,16 @@ starship init fish | source
 # Alias for the fuck
 thefuck --alias | source
 
+# Hand Ctrl+R and Up over to atuin. fzf.fish binds Ctrl+R from conf.d, which
+# fish loads before this file, so its history binding is switched off here
+# while its five other bindings are reinstalled. Up goes to atuin as well so
+# that both keys read the one shared database: fish's own history is per
+# session and ignores commands from sessions started later, which is why every
+# pane used to see a different past. --disable-ai keeps `?` a vi motion instead
+# of a prompt to a remote service.
+fzf_configure_bindings --history=
+atuin init fish --disable-ai | source
+
 # Set Neovim as default editor
 set -gx EDITOR nvim
 
