@@ -1,18 +1,13 @@
-require("bookmarks"):setup({
-  last_directory = { enable = false, persist = true, mode = "dir" },
-  persist = "all",
-  desc_format = "full",
-  file_pick_mode = "parent",
-  custom_desc_input = false,
-  notify = {
-    enable = false,
-    timeout = 1,
-    message = {
-      new = "New bookmark '<key>' -> '<folder>'",
-      delete = "Deleted bookmark in '<key>'",
-      delete_all = "Deleted all bookmarks",
-    },
-  },
+-- Replaced dedukun/bookmarks, which was unmaintained and still called the
+-- ya.mgr_emit API yazi removed. Owns m / ' / bd / bf.
+--
+-- No config bookmarks on purpose: those cannot be deleted from inside yazi.
+-- Everything lives in the state file below, added and removed from inside yazi.
+require("whoosh"):setup({
+  jump_notify = false,
+  -- The default sits inside the plugin directory, which ya pkg owns and wipes
+  -- on upgrade. Runtime bookmarks belong in the state directory instead.
+  bookmarks_path = os.getenv("HOME") .. "/.local/state/yazi/whoosh-bookmarks",
 })
 
 require("starship"):setup({

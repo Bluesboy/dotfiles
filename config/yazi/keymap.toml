@@ -20,18 +20,23 @@ desc = "cd back to the root of the current Git repository"
 
 [[mgr.prepend_keymap]]
 on = [ "m" ]
-run = "plugin bookmarks save"
-desc = "Save current position as a bookmark"
+run = "plugin whoosh save_cwd"
+desc = "Save current directory as a bookmark"
 
 [[mgr.prepend_keymap]]
 on = [ "'" ]
-run = "plugin bookmarks jump"
+run = "plugin whoosh jump_by_key"
 desc = "Jump to a bookmark"
 
 [[mgr.prepend_keymap]]
 on = [ "b", "d" ]
-run = "plugin bookmarks delete"
+run = "plugin whoosh delete_by_key"
 desc = "Delete a bookmark"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "f" ]
+run = "plugin whoosh jump_by_fzf"
+desc = "Jump to a bookmark by fzf"
 
 [[mgr.prepend_keymap]]
 on = [ "<Backspace>" ]

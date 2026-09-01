@@ -4,11 +4,6 @@ rev = "4a0c70e"
 hash = "3c66d95bf63fa16178e98967fbae9429"
 
 [[plugin.deps]]
-use = "dedukun/bookmarks"
-rev = "9ef1254"
-hash = "92fbb5483657fa7976cdf4e0104e18e0"
-
-[[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
 rev = "8bb639d"
 hash = "8c5f14c09c981a496afaab5184e4aa08"
@@ -67,6 +62,11 @@ hash = "ed359abc14ba915a12e759435ed721ab"
 use = "ahkohd/eza-preview"
 rev = "e8fb6c8"
 hash = "c238595c801caa4f28553b9af8cf8804"
+
+[[plugin.deps]]
+use = "WhoSowSee/whoosh"
+rev = "43f3202"
+hash = "da14dfe482886e756150ae4f5c2bb23"
 
 [[plugin.deps]]
 use = "Bluesboy/yafg"
