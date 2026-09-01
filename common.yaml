@@ -7,7 +7,6 @@
     - bat
     - btop
     - feh
-    - fish
     - git
     - lazy-tmux
     - lazygit
@@ -89,6 +88,41 @@
       owner: "{{ ansible_facts['user_uid'] }}"
       group: "{{ ansible_facts['user_gid'] }}"
     loop: "{{ configs }}"
+
+  # fish is symlinked file by file rather than as a whole directory. It writes
+  # fish_variables next to its config, and fisher drops plugin files into
+  # conf.d, themes, functions and completions. Linking the directory put all of
+  # that inside the repository, which is why .gitignore used to carry a long
+  # list of generated fish paths.
+  - name: "Create the fish configuration directories"
+    ansible.builtin.file:
+      path: "{{ ansible_facts['user_dir'] }}/.config/fish/{{ item }}"
+      state: directory
+      mode: "0755"
+      owner: "{{ ansible_facts['user_uid'] }}"
+      group: "{{ ansible_facts['user_gid'] }}"
+    loop:
+    - ""
+    - completions
+    - conf.d
+    - functions
+    - themes
+
+  - name: "Find the fish configuration files"
+    ansible.builtin.find:
+      paths: "{{ playbook_dir }}/config/fish"
+      recurse: true
+      file_type: file
+    register: fish_files
+
+  - name: "Create symlinks for the fish configuration files"
+    ansible.builtin.file:
+      src: "{{ item }}"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/fish/{{ item | relpath(playbook_dir + '/config/fish') }}"
+      state: link
+      owner: "{{ ansible_facts['user_uid'] }}"
+      group: "{{ ansible_facts['user_gid'] }}"
+    loop: "{{ fish_files.files | map(attribute='path') | sort }}"
 
   - name: "Create symlink for sesh starter"
     ansible.builtin.file:
