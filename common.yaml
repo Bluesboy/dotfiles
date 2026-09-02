@@ -67,6 +67,17 @@
       msg: "{{ pacman_upgrade.packages | sort }}"
     when: pacman_upgrade.packages | default([]) | length > 0
 
+  # kewlfft.aur.aur documents an "updated" return value, but it is only filled
+  # in by the per-package install path. The upgrade path returns just changed,
+  # msg and helper, so the list has to come from a before/after snapshot of the
+  # foreign (AUR) packages instead.
+  - name: "List AUR packages before the upgrade"
+    ansible.builtin.command:
+      cmd: "pacman -Qm"
+    register: aur_before
+    changed_when: false
+    check_mode: false
+
   - name: "Upgrade all AUR packages"
     kewlfft.aur.aur:
       upgrade: true
@@ -76,10 +87,17 @@
     become_user: "{{ aur_builder_user }}"
     register: aur_upgrade
 
+  - name: "List AUR packages after the upgrade"
+    ansible.builtin.command:
+      cmd: "pacman -Qm"
+    register: aur_after
+    changed_when: false
+    check_mode: false
+
   - name: "Show upgraded AUR packages"
     ansible.builtin.debug:
-      msg: "{{ aur_upgrade.updated | sort }}"
-    when: aur_upgrade.updated | default([]) | length > 0
+      msg: "{{ aur_after.stdout_lines | difference(aur_before.stdout_lines) | sort }}"
+    when: aur_after.stdout_lines | difference(aur_before.stdout_lines) | length > 0
 
   - name: "Create symlink for configuration directories"
     ansible.builtin.file:
