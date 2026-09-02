@@ -274,15 +274,6 @@
 
   # Misc
 
-  - name: "Clipboard"
-    kewlfft.aur.aur:
-      name:
-      - clipboard # Cut, copy, and paste anything in your terminal.
-      use: "{{ aur_helper }}"
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
-
   - name: "Install FFmpegthumbnailer"
     community.general.pacman:
       name:

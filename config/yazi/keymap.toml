@@ -119,11 +119,6 @@ run = "plugin bypass smart-enter"
 desc = "Open a file, or recursively enter child directory, skipping children with only a single subdirectory"
 
 [[mgr.prepend_keymap]]
-on = "<C-y>"
-run = ["plugin system-clipboard"]
-desc = "Yank to System clipboard"
-
-[[mgr.prepend_keymap]]
 on   = [ "f","g" ]
 run  = "plugin yafg"
 desc = "find file by content (ctrl-t toggles ripgrep/fuzzy match)"
