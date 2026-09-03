@@ -186,6 +186,7 @@
       - git-delta # A syntax-highlighting pager for git
       - github-cli # The GitHub CLI
       - go-yq # Portable command-line YAML processor
+      - hugo # Fast and Flexible Static Site Generator in Go
       - impala # TUI for managing wifi
       - iwd # Internet Wireless Daemon
       - jq # Command-line JSON processor
