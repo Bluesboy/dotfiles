@@ -1,4 +1,32 @@
 ---
+# Global yamllint style: strict defaults, relaxed where Ansible playbooks differ.
+# Kept compatible with the yamllint settings ansible-lint requires.
+extends: default
+
 rules:
-  indentation: disable
-  line-length: disable
+  # Sequences are never indented under their parent key.
+  indentation:
+    spaces: 2
+    indent-sequences: false
+  # Inline comments are written with a single space before "#".
+  comments:
+    min-spaces-from-content: 1
+  # Long package descriptions stay on one line.
+  line-length:
+    max: 180
+    level: warning
+  # Required by ansible-lint: comments may sit at any indentation,
+  # "{{ var }}" needs one space inside braces, and file modes must
+  # be quoted strings instead of octal numbers.
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
+
+ignore: |
+  .git/
+  node_modules/
+  .venv/
+  venv/

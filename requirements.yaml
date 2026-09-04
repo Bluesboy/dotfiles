@@ -5,9 +5,9 @@ roles:
 
 collections:
 - name: community.general
-#AUR
+# AUR
 - name: kewlfft.aur
-#Install from github
+# Install from github
 - name: quera.github
   type: git
   source: https://github.com/QueraTeam/ansible-github
