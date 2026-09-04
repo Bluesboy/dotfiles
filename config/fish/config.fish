@@ -18,9 +18,6 @@ fish_config theme choose "catppuccin-macchiato"
 # Initialize Starship prompt
 starship init fish | source
 
-# Alias for the fuck
-thefuck --alias | source
-
 # Hand Ctrl+R and Up over to atuin. fzf.fish binds Ctrl+R from conf.d, which
 # fish loads before this file, so its history binding is switched off here
 # while its five other bindings are reinstalled. Up goes to atuin as well so
@@ -59,9 +56,9 @@ set -gx CLIPBOARD_THEME ansi
 set -gx GO_TASK_PROGNAME go-task
 
 # Setup PATH from .bash_profile
-fish_add_path -m ~/.local/bin
-fish_add_path -m $N_PREFIX
-fish_add_path -m ~/.cargo/bin
+fish_add_path -gm ~/.local/bin
+fish_add_path -gm $N_PREFIX/bin
+fish_add_path -gm ~/.cargo/bin
 
 # Do not display greeting
 functions -e fish_greeting
@@ -109,9 +106,9 @@ if status --is-interactive
   abbr --add --global -- v 'vim'
 end
 
-set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; fish_add_path -m $GOPATH/bin; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; fish_add_path -gm $GOPATH/bin; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
 # Enable krew
-set -q KREW_ROOT; and fish_add_path $KREW_ROOT/.krew/bin; or fish_add_path $HOME/.krew/bin
+set -q KREW_ROOT; and fish_add_path -g $KREW_ROOT/.krew/bin; or fish_add_path -g $HOME/.krew/bin
 
-fish_add_path -m ~/.luarocks/bin/
+fish_add_path -gm ~/.luarocks/bin/

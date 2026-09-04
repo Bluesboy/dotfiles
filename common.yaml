@@ -211,7 +211,6 @@
       - smartmontools # Control and monitor S.M.A.R.T. enabled ATA and SCSI Hard Drives
       - starship # The cross-shell prompt for astronauts
       - superfile # Pretty fancy and modern terminal file manager
-      - thefuck # Magnificent app which corrects your previous console command
       - tmux # A terminal multiplexer
       - trash-cli # Command line trashcan (recycle bin) interface
       - typst # A markup-based typesetting system for the sciences
