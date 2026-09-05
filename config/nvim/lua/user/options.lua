@@ -51,6 +51,24 @@ for key, value in pairs(options) do
   vim.opt[key] = value
 end
 
+-- Langmap: normal mode commands typed in the Russian layout.
+-- Must be set before langmapper.setup() runs (it only handles mappings).
+local function escape_langmap(str)
+  -- These characters are meaningful inside 'langmap' itself
+  return vim.fn.escape(str, [[;,."|\]])
+end
+
+local en = [[`qwertyuiop[]asdfghjkl;'zxcvbnm,.]]
+local ru = [[ёйцукенгшщзхъфывапролджэячсмитьбю]]
+local en_shift = [[~QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>]]
+local ru_shift = [[ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ]]
+
+vim.opt.langmap = vim.fn.join({
+  -- typed characters first, what they mean second
+  escape_langmap(ru_shift) .. ";" .. escape_langmap(en_shift),
+  escape_langmap(ru) .. ";" .. escape_langmap(en),
+}, ",")
+
 -- Detect Ansible YAML files as yaml.ansible so ansiblels takes over yamlls
 vim.filetype.add({
   pattern = {
