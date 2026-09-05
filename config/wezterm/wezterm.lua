@@ -84,7 +84,10 @@ config.keys = {
   { key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
   { key = "'", mods = "CTRL|SHIFT", action = act.Hide },
   { key = "t", mods = "SUPER", action = act.DisableDefaultAssignment },
-  { key = "Enter", mods = "SHIFT", action = act.SendString("\x1b\r") },
+  -- ALT+Enter is a newline in Codex CLI and "run it" in atuin, both of which
+  -- read it as the legacy ESC CR that survives tmux without extended keys.
+  -- wezterm claims the combo for ToggleFullScreen by default and would eat it.
+  { key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
 }
 
 -- Appends CTRL+hjkl and META+hjkl, see nav.lua.
