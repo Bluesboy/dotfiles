@@ -73,3 +73,22 @@ ignored_commands = [
   "ls",
   "z",
 ]
+
+# SHIFT+Enter runs the selected command straight away, while Enter keeps
+# dropping it on the prompt for editing (enter_accept stays false). It only
+# reaches atuin because tmux.conf forces `extended-keys always`: atuin asks for
+# extended keys with the kitty protocol, which tmux does not speak. ALT+Enter
+# stays bound as well, since it travels as the legacy ESC CR and works even
+# without that forced mode. wezterm has to leave both combos alone, see the
+# DisableDefaultAssignment in wezterm.lua.
+[keymap.emacs]
+"shift-enter" = "accept"
+"alt-enter" = "accept"
+
+[keymap.vim-insert]
+"shift-enter" = "accept"
+"alt-enter" = "accept"
+
+[keymap.vim-normal]
+"shift-enter" = "accept"
+"alt-enter" = "accept"
