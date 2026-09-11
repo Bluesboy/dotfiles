@@ -36,6 +36,20 @@
       validate: "visudo -cf %s"
     become: true
 
+  # sudo hands the invoking user's PATH straight to the builder because
+  # secure_path is commented out system wide. A home directory the builder
+  # cannot traverse then makes a PATH lookup fail with EACCES rather than
+  # ENOENT, so build scripts that probe for an optional interpreter see
+  # PermissionError instead of the FileNotFoundError they guard against.
+  - name: "Give the AUR builder user a clean PATH"
+    ansible.builtin.lineinfile:
+      path: "/etc/sudoers.d/11-install-{{ aur_builder_user }}"
+      line: 'Defaults>{{ aur_builder_user }} secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
+      create: true
+      mode: "0440"
+      validate: "visudo -cf %s"
+    become: true
+
   - name: "Disable debug packages in makepkg builds"
     ansible.builtin.copy:
       dest: /etc/makepkg.conf.d/nodebug.conf

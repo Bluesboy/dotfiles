@@ -67,6 +67,21 @@
       msg: "{{ pacman_upgrade.packages | sort }}"
     when: pacman_upgrade.packages | default([]) | length > 0
 
+  # kewlfft.aur.aur always prefixes the helper with "env LC_ALL=C LANGUAGE=C"
+  # so it can parse the output, and that C locale leaks through paru into
+  # makepkg and into the build. Test suites that touch non-ASCII file names
+  # (rmlint-git) then fail in check(). makepkg sources this drop-in, so the
+  # build gets UTF-8 back while paru's own output stays in the C locale.
+  - name: "Build AUR packages in a UTF-8 locale"
+    ansible.builtin.copy:
+      dest: /etc/makepkg.conf.d/locale.conf
+      content: |
+        export LC_ALL=C.UTF-8
+      owner: root
+      group: root
+      mode: "0644"
+    become: true
+
   # kewlfft.aur.aur documents an "updated" return value, but it is only filled
   # in by the per-package install path. The upgrade path returns just changed,
   # msg and helper, so the list has to come from a before/after snapshot of the
