@@ -97,7 +97,6 @@
     kewlfft.aur.aur:
       upgrade: true
       use: "{{ aur_helper }}"
-      extra_args: "--ignore zfs-dkms,zfs-utils"
     become: true
     become_user: "{{ aur_builder_user }}"
     register: aur_upgrade

@@ -163,7 +163,6 @@
   - name: "Install Cockpit plugins from AUR"
     kewlfft.aur.aur:
       name:
-      - cockpit-zfs-manager # An interactive ZFS on Linux admin package for Cockpit
       - cockpit-file-sharing # A Cockpit plugin to easily manage samba and NFS file sharing.
       - cockpit-navigator # A Featureful File Browser for Cockpit
       - cockpit-pacman # Cockpit plugin for Arch Linux package management using alpm.rs
