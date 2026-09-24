@@ -100,6 +100,15 @@
       state: present
     become: true
 
+  - name: "Install Clash Verge pacman hook"
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/config/clash-verge/clash-verge.hook"
+      dest: /etc/pacman.d/hooks/clash-verge.hook
+      owner: root
+      group: root
+      mode: "0644"
+    become: true
+
   - name: "Install VLESS apps"
     kewlfft.aur.aur:
       name:

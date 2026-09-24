@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = clash-verge-rev-bin
+
+[Action]
+Description = Registering Clash Verge service cores...
+When = PostTransaction
+Exec = /usr/bin/clash-verge-service-install --install-service
