@@ -12,11 +12,11 @@
     - lazy-tmux
     - lazygit
     - nvim
-    - opensessions
     - sesh
     - starship
     - tmux
     - tmux-powerline
+    - workmux
     - yazi
 
   tasks:
@@ -304,6 +304,7 @@
       - sesh-bin # Smart session manager for the terminal
       - smug-bin # A session manager for tmux written in Go
       - tmux-plugin-manager # tpm - Tmux Plugin Manager
+      - workmux-bin # git worktrees + tmux windows for zero-friction parallel dev (prebuilt binary)
       use: "{{ aur_helper }}"
       state: present
     become: true

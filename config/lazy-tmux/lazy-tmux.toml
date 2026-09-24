@@ -1,0 +1,32 @@
+data_dir = "~/.local/share/lazy-tmux"
+
+theme = "light"
+
+save_interval = "5m"
+restore_timeout = "5s"
+
+restore_allowlist = [
+  "nvim( .*)?",
+  "lazygit",
+  "k9s( .*)?",
+  "btop",
+  "htop"
+]
+
+restore_denylist = [
+  "opencode( .*)?",
+  "claude( .*)?",
+  "codex( .*)?",
+  "ssh( .*)?",
+  "kubectl port-forward .*",
+  "docker .*",
+  "podman .*",
+  "npm .*",
+  "pnpm .*",
+  "cargo run .*",
+  "go run .*"
+]
+
+[scrollback]
+enabled = true
+lines = 3000

@@ -3,3 +3,8 @@
 
 # Added by @autodev/codebase
 autodev-config.json
+
+# Personal tmux session tools
+.smug.yaml
+.smug.yml
+.workmux.yaml

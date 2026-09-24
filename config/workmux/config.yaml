@@ -1,0 +1,9 @@
+# Global workmux defaults. Per-repo overrides go to .workmux.yaml.
+# Worktrees live as windows inside the project session that sesh opened,
+# so they do not show up as extra sessions in sesh or lazy-tmux.
+mode: window
+window_prefix: "wm-"
+theme:
+  scheme: default
+  mode: dark
+nerdfont: true

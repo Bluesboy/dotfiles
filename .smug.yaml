@@ -1,0 +1,13 @@
+---
+session: dotfiles
+root: .
+
+windows:
+- name: dotfiles
+  root: .
+  layout: main-horizontal
+  commands:
+  - yazi
+  panes:
+  - type: horizontal
+    root: .

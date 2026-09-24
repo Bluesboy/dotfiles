@@ -1,0 +1,30 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+
+sort_order = [
+  "tmux",
+  "config",
+  "zoxide",
+]
+
+[tui]
+show_icons = true
+show_windows = true
+preview = true
+preview_width = 55
+preview_min_width = 100
+preview_border = "line"
+
+[[wildcard]]
+pattern = "~/learn/**"
+startup_command = "$HOME/.local/bin/sesh-project-start \"{}\""
+preview_command = "eza --all --git --icons --color=always {}"
+
+[[wildcard]]
+pattern = "~/work/**"
+startup_command = "$HOME/.local/bin/sesh-project-start \"{}\""
+preview_command = "eza --all --git --icons --color=always {}"
+
+[[wildcard]]
+pattern = "~/.dotfiles"
+startup_command = "$HOME/.local/bin/sesh-project-start \"{}\""
+preview_command = "eza --all --git --icons --color=always {}"

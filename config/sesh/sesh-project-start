@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+root="${1:?project root is required}"
+
+cd "$root"
+
+for smug_file in .smug.yaml .smug.yml; do
+    if [[ -f "$smug_file" ]]; then
+        smug start -f "$smug_file" --inside-current-session
+        break
+    fi
+done
+
+if [[ -n "${TMUX_PANE:-}" ]]; then
+    tmux select-pane -t "$TMUX_PANE"
+fi
+
+exec nvim .
