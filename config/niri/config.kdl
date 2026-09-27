@@ -360,6 +360,29 @@ window-rule {
 }
 
 window-rule {
+    // Alacritty is translucent (window.opacity), blur what shows through
+    match app-id="^Alacritty$"
+    // Otherwise the focus ring fill shows through the translucent window
+    draw-border-with-background false
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
+    // wiremix popup started from the waybar wireplumber module
+    match app-id="^wiremix$"
+    // Otherwise the focus ring fill shows through the translucent window
+    draw-border-with-background false
+    open-floating true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 600; }
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
     match app-id="flameshot"
     // match title="flameshot"
     open-floating true

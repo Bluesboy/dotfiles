@@ -5,6 +5,7 @@
   vars:
     configs:
     - pipewire
+    - wiremix
 
   tasks:
   - name: "Create symlinks for application configurations"

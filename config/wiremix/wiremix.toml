@@ -1,0 +1,44 @@
+# wiremix configuration, merged with the built-in defaults.
+# Reference: https://github.com/tsowell/wiremix/blob/main/wiremix.toml
+
+theme = "catppuccin_macchiato"
+char_set = "solid"
+
+# Only sample peaks of visible nodes, the mixer lives in a popup anyway
+lazy_capture = true
+
+# Catppuccin Macchiato, see https://catppuccin.com/palette
+[themes.catppuccin_macchiato]
+default_device = { fg = "#a6da95" }
+default_stream = { fg = "#a6da95" }
+selector = { fg = "#f5a97f" }
+tab = { fg = "#a5adcb" }
+tab_selected = { fg = "#c6a0f6", add_modifier = "BOLD" }
+tab_marker = { fg = "#c6a0f6" }
+list_more = { fg = "#6e738d" }
+node_title = { fg = "#cad3f5" }
+node_target = { fg = "#8aadf4" }
+volume = { fg = "#cad3f5" }
+volume_empty = { fg = "#494d64" }
+volume_filled = { fg = "#8aadf4" }
+meter_inactive = { fg = "#494d64" }
+meter_active = { fg = "#a6da95" }
+meter_overload = { fg = "#ed8796" }
+meter_center_inactive = { fg = "#494d64" }
+meter_center_active = { fg = "#a6da95" }
+config_device = { fg = "#cad3f5" }
+config_profile = { fg = "#8aadf4" }
+dropdown_icon = { fg = "#c6a0f6" }
+dropdown_border = { fg = "#b7bdf8" }
+dropdown_item = { fg = "#cad3f5" }
+dropdown_selected = { fg = "#24273a", bg = "#c6a0f6" }
+dropdown_more = { fg = "#6e738d" }
+help_border = { fg = "#b7bdf8" }
+help_item = { fg = "#cad3f5" }
+help_more = { fg = "#6e738d" }
+
+# Default selector is shaded blocks, which are barely visible; use solid ones
+[char_sets.solid]
+selector_top = "▌"
+selector_middle = "▌"
+selector_bottom = "▌"
