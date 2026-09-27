@@ -1,8 +1,7 @@
 data_dir = "~/.local/share/lazy-tmux"
 
-theme = "light"
+theme = "dark"
 
-save_interval = "5m"
 restore_timeout = "5s"
 
 restore_allowlist = [
