@@ -38,6 +38,7 @@
       group: "{{ ansible_facts['user_gid'] }}"
     loop:
     - AGENTS.md
+    - keybindings.json
     - settings.json
     - prompts/k8s-audit.md
 
@@ -444,6 +445,19 @@
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"
+
+  - name: "Install Pi Claude bridge"
+    ansible.builtin.command:
+      argv:
+      - pi
+      - install
+      - npm:pi-claude-bridge
+      - --no-approve
+      chdir: "{{ ansible_facts['user_dir'] }}"
+      creates: "{{ ansible_facts['user_dir'] }}/.pi/agent/npm/node_modules/pi-claude-bridge/package.json"
+    register: pi_claude_bridge_install
+    changed_when: pi_claude_bridge_install.rc == 0 and pi_claude_bridge_install.stdout is not search('^skipped, since ')
+    failed_when: pi_claude_bridge_install.rc != 0
 
   - name: "Install 'skills' Node package"
     community.general.npm:
