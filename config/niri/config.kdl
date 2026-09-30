@@ -406,9 +406,9 @@ window-rule {
     open-focused true
     open-on-workspace "main"
     popups {
-        opacity 0.7
+        opacity 0.85
         background-effect {
-            blur true
+            blur false
         }
     }
 }
