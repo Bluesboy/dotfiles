@@ -31,6 +31,7 @@
 
 - Persistent workstation changes belong in `~/.dotfiles` and should be managed through its Ansible playbooks.
 - Prefer editing source files under `~/.dotfiles/config/` instead of files symlinked into `$HOME`.
+- Always install packages with Ansible playbooks in `~/.dotfiles` and `make apply` in that repo.
 - Use repository-supported commands such as `make syntax`, `make lint`, `make check` and `make apply`.
 - Do not install, remove or replace system packages unless explicitly requested.
 - Do not execute privileged or destructive system operations without explicit user approval.
