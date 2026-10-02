@@ -27,6 +27,7 @@
     loop:
     - .pi/agent
     - .pi/agent/prompts
+    - .pi/agent/extensions/powerline-footer
 
   - name: "Create symlinks for Pi configuration files"
     ansible.builtin.file:
@@ -40,7 +41,14 @@
     - AGENTS.md
     - keybindings.json
     - settings.json
+    - plan-mode-lite.json
+    - new-model-picker.json
+    - extensions/powerline-footer/theme.json
     - prompts/k8s-audit.md
+    - prompts/plan-task.md
+    - prompts/review.md
+    - prompts/check.md
+    - prompts/diagnose.md
 
   # Core developer tools
 
@@ -445,19 +453,6 @@
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"
-
-  - name: "Install Pi Claude bridge"
-    ansible.builtin.command:
-      argv:
-      - pi
-      - install
-      - npm:pi-claude-bridge
-      - --no-approve
-      chdir: "{{ ansible_facts['user_dir'] }}"
-      creates: "{{ ansible_facts['user_dir'] }}/.pi/agent/npm/node_modules/pi-claude-bridge/package.json"
-    register: pi_claude_bridge_install
-    changed_when: pi_claude_bridge_install.rc == 0 and pi_claude_bridge_install.stdout is not search('^skipped, since ')
-    failed_when: pi_claude_bridge_install.rc != 0
 
   - name: "Install 'skills' Node package"
     community.general.npm:

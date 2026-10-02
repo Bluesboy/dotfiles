@@ -7,7 +7,7 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { stripVTControlCharacters } from "node:util";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import usageBars, { accountId, formatReset, gitIndicators, overlayParts, parseGitStatus, parseQuotas, queryGitStatus, retryAt, type GitStatus } from "../extensions/usage-bars.ts";
+import usageBars, { accountId, formatReset, gitIndicators, overlayParts, combinedOverlayParts, parseGitStatus, parseQuotas, queryGitStatus, retryAt, type GitStatus } from "../extensions/usage-bars.ts";
 
 // Node's ESM resolver ignores NODE_PATH. Resolve the Pi TUI runtime via CJS.
 // Run with Pi's node_modules on NODE_PATH and Node >= 22.19.
@@ -74,6 +74,17 @@ test("overlay labels stay inside the bar; low usage has a visible filled cell", 
 	assert.deepEqual(overlayParts(50, "25%", 0), { filled: "", remaining: "" });
 });
 
+test("combined bar overlays independent windows on the same full-width scale", () => {
+	const parts = combinedOverlayParts(10, 60, "10% 2h (60% 3d)", 20);
+	assert.deepEqual(parts.map(({ kind, text }) => [kind, text.length]), [["short", 2], ["weekly", 10], ["empty", 8]]);
+	assert.equal(parts.map(({ text }) => text).join(""), overlayParts(0, "10% 2h (60% 3d)", 20).remaining);
+	assert.deepEqual(combinedOverlayParts(80, 20, "label", 20).map(({ kind, text }) => [kind, text.length]), [["short", 16], ["empty", 4]]);
+	assert.deepEqual(combinedOverlayParts(undefined, 50, "label", 20).map(({ kind, text }) => [kind, text.length]), [["weekly", 10], ["empty", 10]]);
+	assert.deepEqual(combinedOverlayParts(undefined, undefined, "?", 20).map(({ kind, text }) => [kind, text.length]), [["empty", 20]]);
+	assert.deepEqual(combinedOverlayParts(100, 100, "full", 20).map(({ kind, text }) => [kind, text.length]), [["short", 20]]);
+	assert.deepEqual(combinedOverlayParts(10, 50, "label", 0), []);
+});
+
 test("reset countdown supports minutes, hours, days and expired windows", () => {
 	assert.equal(formatReset(undefined, now), "");
 	assert.equal(formatReset(now, now), "now");
@@ -128,13 +139,15 @@ const sampleGit: GitStatus = {
 	staged: 2, modified: 3, untracked: 1, conflicts: 0, ahead: 2, behind: 1, stash: 4,
 };
 type Handler = (event: unknown, context: ExtensionContext) => void | Promise<void>;
-async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, signal: AbortSignal) => Promise<GitStatus>) {
+async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, signal: AbortSignal) => Promise<GitStatus>, statusOnly = false) {
 	const { colorToHex, parseColor, styleText } = await import("@earendil-works/pi-tui");
 	const styled: Array<{ text: string; color: string; background?: string }> = [];
 	const foreground: Array<{ color: string; text: string }> = [];
 	let thinkingLevel = "medium";
 	let gitResult = { ...sampleGit };
 	let gitReads = 0;
+	let footerCalls = 0;
+	const statuses = new Map<string, string | undefined>();
 	const handlers = new Map<string, Handler>();
 	let command: Handler | undefined;
 	let render: ((width: number) => string[]) | undefined;
@@ -165,9 +178,10 @@ async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, s
 					return colors ? styleText(text, options, "truecolor") : text;
 				},
 			},
-			setStatus() {},
+			setStatus: (key: string, value?: string) => statuses.set(key, value),
 			notify: (text: string) => notifications.push(text),
 			setFooter(factory: ((...args: unknown[]) => { render: (width: number) => string[]; dispose(): void }) | undefined) {
+				footerCalls++;
 				render = factory?.({ requestRender() {} }, {}, {
 					onBranchChange: () => () => {}, getGitBranch: () => "main",
 					getExtensionStatuses: () => new Map([["other-extension", "other status"]]),
@@ -179,7 +193,7 @@ async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, s
 		getThinkingLevel: () => thinkingLevel,
 		on: (event: string, handler: Handler) => handlers.set(event, handler),
 		registerCommand: (_name: string, definition: { handler: Handler }) => { command = definition.handler; },
-	} as unknown as ExtensionAPI, gitReader ?? (async () => { gitReads++; return { ...gitResult }; }));
+	} as unknown as ExtensionAPI, gitReader ?? (async () => { gitReads++; return { ...gitResult }; }), { statusOnly });
 	return {
 		start: () => handlers.get("session_start")!({}, context),
 		stop: () => handlers.get("session_shutdown")!({}, context),
@@ -195,6 +209,8 @@ async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, s
 			await new Promise<void>((resolve) => setImmediate(resolve));
 		},
 		gitReads: () => gitReads,
+		footerCalls: () => footerCalls,
+		statuses,
 		notifications, styled, foreground,
 	};
 }
@@ -372,4 +388,88 @@ test("missing OAuth never uses API keys and does not display fabricated percenta
 		else process.env.CLAUDE_CONFIG_DIR = previous;
 		await rm(directory, { recursive: true });
 	}
+});
+
+test("Powerline mode publishes colored quotas, without owning the footer or polling Git", async () => {
+	const original = globalThis.fetch;
+	let requests = 0;
+	globalThis.fetch = async (url) => {
+		requests++;
+		return Response.json(String(url).includes("anthropic") ? anthropic : openai);
+	};
+	const ui = await harness("tui", true, undefined, true);
+	try {
+		assert.equal(requests, 0, "loading the extension does not request quotas");
+		await ui.start();
+		await ui.refresh();
+		assert.equal(requests, 2, "in-flight quota refreshes coalesce");
+		const openaiStatus = ui.statuses.get("usage-openai")!;
+		const anthropicStatus = ui.statuses.get("usage-anthropic")!;
+		assert.match(openaiStatus, /\x1b\[/, "status retains ANSI coloring");
+		assert.match(stripVTControlCharacters(openaiStatus), /6% +1h.*\(80% +1d0h\)/);
+		assert.match(stripVTControlCharacters(anthropicStatus), /12% +1h.*\(95% +1d0h\)/);
+		for (const status of [openaiStatus, anthropicStatus]) {
+			const plain = stripVTControlCharacters(status);
+			assert.equal(plain.length, 27, "one shared 27-cell scale");
+			assert.match(plain.trim(), /^\d+% \d+[dhm].* \(\d+% \d+[dhm].*\)$/, "one centered label contains both windows");
+			assert.ok(Math.abs(plain.length - plain.trimEnd().length - (plain.length - plain.trimStart().length)) <= 1, "the complete label is centered");
+		}
+		const { colorToHex, mixColors, parseColor } = await import("@earendil-works/pi-tui");
+		for (const [bright, shortFill, weeklyFill] of [["#91d7e3", 2, 20], ["#f5a97f", 3, 23]] as const) {
+			const dark = colorToHex(mixColors(parseColor(bright), parseColor("#24273a"), 0.3));
+			const brightness = (hex: string) => hex.slice(1).match(/../g)!.reduce((sum, part) => sum + parseInt(part, 16), 0);
+			assert.ok(brightness(dark) < brightness(bright), "weekly track is darker for each provider");
+			assert.ok(ui.styled.some(({ text, color, background }) => background === bright && color === "#24273a" && text.length === shortFill), "short-window fill follows its own percentage");
+			assert.ok(ui.styled.some(({ text, color, background }) => background === dark && color === "#24273a" && text.length === weeklyFill), "weekly fill follows its own percentage");
+		}
+		assert.ok(ui.styled.filter(({ text }) => text.includes("%")).every(({ background }) => background !== undefined), "percentages are rendered inside colored tracks, not outside");
+		assert.doesNotMatch(openaiStatus + anthropicStatus, /test-oauth-token|5h|7d|OpenAI|Anthropic/);
+		await ui.thinking("high");
+		assert.equal(requests, 2);
+		assert.equal(ui.gitReads(), 0);
+		assert.equal(ui.footerCalls(), 0);
+	} finally {
+		await ui.stop();
+		globalThis.fetch = original;
+	}
+	assert.equal(ui.statuses.get("usage-openai"), undefined);
+	assert.equal(ui.statuses.get("usage-anthropic"), undefined);
+	assert.equal(ui.footerCalls(), 0, "shutdown does not clear the Powerline footer");
+});
+
+test("Powerline mode exposes rate-limit errors and respects backoff", async () => {
+	const original = globalThis.fetch;
+	let requests = 0;
+	globalThis.fetch = async () => {
+		requests++;
+		return new Response(null, { status: 429, headers: { "retry-after": "600" } });
+	};
+	const ui = await harness("tui", false, undefined, true);
+	try {
+		await ui.start();
+		await ui.refresh();
+		await ui.refresh();
+		assert.equal(requests, 2);
+		for (const provider of ["openai", "anthropic"]) {
+			const status = ui.statuses.get(`usage-${provider}`)!;
+			assert.match(status, /HTTP 429/);
+			assert.doesNotMatch(status, /\d+%/);
+		}
+		assert.equal(ui.gitReads(), 0);
+	} finally { await ui.stop(); globalThis.fetch = original; }
+});
+
+test("Powerline mode is inactive in non-interactive sessions", async () => {
+	const original = globalThis.fetch;
+	let requests = 0;
+	globalThis.fetch = async () => { requests++; throw new Error("must not fetch"); };
+	const ui = await harness("print", false, undefined, true);
+	try {
+		await ui.start();
+		await ui.refresh();
+		assert.equal(requests, 0);
+		assert.equal(ui.statuses.size, 0);
+		assert.equal(ui.gitReads(), 0);
+		assert.equal(ui.footerCalls(), 0);
+	} finally { await ui.stop(); globalThis.fetch = original; }
 });

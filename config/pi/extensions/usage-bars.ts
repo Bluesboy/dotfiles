@@ -13,6 +13,7 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 const POLL_MS = 120_000;
 const TIMEOUT_MS = 10_000;
 const WIDTH = 8;
+const POWERLINE_WIDTH = 27;
 const ENDPOINTS = {
 	openai: "https://chatgpt.com/backend-api/wham/usage",
 	anthropic: "https://api.anthropic.com/api/oauth/usage",
@@ -92,6 +93,17 @@ export function overlayParts(percent: number | undefined, label: string, width =
 	const used = percent !== undefined && Number.isFinite(percent) ? Math.max(0, Math.min(100, percent)) : 0;
 	const filled = Math.min(width, Math.max(used > 0 ? 1 : 0, Math.round(used / 100 * width)));
 	return { filled: padded.slice(0, filled), remaining: padded.slice(filled) };
+}
+
+export function combinedOverlayParts(short: number | undefined, weekly: number | undefined, label: string, width = POWERLINE_WIDTH): Array<{ kind: "short" | "weekly" | "empty"; text: string }> {
+	const text = overlayParts(0, label, width).remaining;
+	const shortEnd = overlayParts(short, "", width).filled.length;
+	const weeklyEnd = Math.max(shortEnd, overlayParts(weekly, "", width).filled.length);
+	return [
+		{ kind: "short" as const, text: text.slice(0, shortEnd) },
+		{ kind: "weekly" as const, text: text.slice(shortEnd, weeklyEnd) },
+		{ kind: "empty" as const, text: text.slice(weeklyEnd) },
+	].filter((part) => part.text.length > 0);
 }
 
 export function retryAt(value: string | null, now = Date.now()): number {
@@ -202,7 +214,8 @@ async function requestHeaders(ctx: ExtensionContext, provider: Provider): Promis
 	return headers;
 }
 
-export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
+export default async function (pi: ExtensionAPI, readGit = queryGitStatus, options: { statusOnly?: boolean } = {}) {
+	const statusOnly = options.statusOnly === true;
 	const { mixColors, parseColor, truncateToWidth, visibleWidth } = await import("@earendil-works/pi-tui");
 	const base = parseColor("#24273a");
 	const peach = parseColor("#f5a97f");
@@ -223,7 +236,7 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
 	const git: { cwd?: string; status?: GitStatus; error?: boolean; nextAt: number; pending?: Promise<void>; controller?: AbortController } = { nextAt: 0 };
 
 	function refreshGit(force = false): Promise<void> {
-		if (!ctx || stopped) return Promise.resolve();
+		if (statusOnly || !ctx || stopped) return Promise.resolve();
 		const cwd = ctx.cwd;
 		const changed = git.cwd !== cwd;
 		if (changed) {
@@ -261,7 +274,58 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
 			(remaining ? theme.style(remaining, { fg: color, bg: mixColors(color, base, 0.75) }) : "");
 	}
 
+	function combinedProviderText(provider: Provider, current: ExtensionContext, now: number): string {
+		const state = states[provider];
+		const windows = [state.quotas[0], state.quotas[1]].map((window) => {
+			const reset = window?.resetAt;
+			const used = reset !== undefined && reset <= now ? undefined : window?.percent;
+			return { used, label: `${used === undefined ? "?" : `${Math.floor(used)}%`} ${reset ? formatReset(reset, now) : "?"}` };
+		});
+		const bright = quotaColors[provider][0];
+		const dark = mixColors(bright, base, 0.3);
+		const label = `${windows[0].label} (${windows[1].label})`;
+		const bar = combinedOverlayParts(windows[0].used, windows[1].used, label).map(({ kind, text }) => {
+			const filled = kind !== "empty";
+			return current.ui.theme.style(text, {
+				fg: filled ? base : bright,
+				bg: kind === "short" ? bright : kind === "weekly" ? dark : mixColors(bright, base, 0.75),
+			});
+		}).join("");
+		const stale = state.error || (state.quotas.length && now > state.nextAt + POLL_MS ? "stale" : "");
+		return bar + (stale ? current.ui.theme.fg("warning", ` [${stale}]`) : "");
+	}
+
+	function providerText(provider: Provider, mode: number, current: ExtensionContext, now = Date.now()): string {
+		if (statusOnly) return combinedProviderText(provider, current, now);
+		const theme = current.ui.theme;
+		const state = states[provider];
+		const barWidth = mode === 0 ? WIDTH : mode === 1 ? 6 : mode === 2 ? 4 : 0;
+		const windows = state.quotas.length ? state.quotas : [{ percent: undefined }, { percent: undefined }];
+		const parts = windows.map((window, index) => {
+			const reset = "resetAt" in window ? window.resetAt : undefined;
+			const used = reset !== undefined && reset <= now ? undefined : window.percent;
+			const color = quotaColors[provider][index % 2];
+			let time = reset ? formatReset(reset, now) : "?";
+			if (barWidth && time.length > barWidth) time = time.match(/^\d+[dhm]/)?.[0] ?? time;
+			const text = used === undefined ? "?" : `${Math.floor(used)}%`;
+			return (barWidth ? overlayBar(current, used, time, color, barWidth) + " " : "") +
+				theme.style(barWidth ? text.padStart(4) : text, { fg: color, dim: used === undefined });
+		});
+		const stale = state.error || (state.quotas.length && now > state.nextAt + POLL_MS ? "stale" : "");
+		return parts.join(" ") + (stale ? theme.fg("warning", mode < 3 ? ` [${stale}]` : " !") : "");
+	}
+
+	function publishStatuses(context: ExtensionContext): void {
+		context.ui.setStatus("usage-openai", providerText("openai", 0, context));
+		context.ui.setStatus("usage-anthropic", providerText("anthropic", 0, context));
+	}
+
 	function installFooter(context: ExtensionContext): void {
+		if (statusOnly) {
+			redraw = () => { if (ctx && !stopped) publishStatuses(ctx); };
+			redraw();
+			return;
+		}
 		context.ui.setStatus("usage-bars-context", undefined);
 		context.ui.setStatus("usage-bars-limit", undefined);
 		context.ui.setFooter((tui, _theme, footerData) => {
@@ -300,23 +364,6 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
 					const fullLeft = overlayBar(current, percent, percentText, contextColor) + info;
 					const compactLeft = overlayBar(current, percent, percentText, contextColor, 4) + info;
 					if (width < 12) return [truncateToWidth(compactLeft, width)];
-					const providerText = (provider: Provider, mode: number): string => {
-						const state = states[provider];
-						const barWidth = mode === 0 ? WIDTH : mode === 1 ? 6 : mode === 2 ? 4 : 0;
-						const windows = state.quotas.length ? state.quotas : [{ percent: undefined }, { percent: undefined }];
-						const parts = windows.map((window, index) => {
-							const reset = "resetAt" in window ? window.resetAt : undefined;
-							const used = reset !== undefined && reset <= now ? undefined : window.percent;
-							const color = quotaColors[provider][index % 2];
-							let time = reset ? formatReset(reset, now) : "?";
-							if (barWidth && time.length > barWidth) time = time.match(/^\d+[dhm]/)?.[0] ?? time;
-							const text = used === undefined ? "?" : `${Math.floor(used)}%`;
-							return (barWidth ? overlayBar(current, used, time, color, barWidth) + " " : "") +
-								theme.style(barWidth ? text.padStart(4) : text, { fg: color, dim: used === undefined });
-						});
-						const stale = state.error || (state.quotas.length && now > state.nextAt + POLL_MS ? "stale" : "");
-						return parts.join(" ") + (stale ? theme.fg("warning", mode < 3 ? ` [${stale}]` : " !") : "");
-					};
 					const gitInfo = gitStatus ? gitIndicators(gitStatus).map(({ color, text }) => theme.fg(color, ` ${text}`)).join("")
 						: branch ? theme.fg("muted", git.error ? " [git?]" : " …") : "";
 					const branchInfo = branch ? theme.fg("success", `  ${branch}`) + gitInfo : "";
@@ -324,7 +371,7 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
 					let quotas = "", leftBase = fullLeft;
 					for (let mode = 0; mode <= 3; mode++) {
 						leftBase = mode < 3 ? fullLeft : compactLeft;
-						quotas = providerText("openai", mode) + theme.fg("dim", " │ ") + providerText("anthropic", mode);
+						quotas = providerText("openai", mode, current, now) + theme.fg("dim", " │ ") + providerText("anthropic", mode, current, now);
 						if (visibleWidth(leftBase + branchInfo) + 2 + visibleWidth(quotas) <= width) break;
 					}
 					quotas = truncateToWidth(quotas, Math.max(0, width - Math.min(8, visibleWidth(leftBase)) - 2));
@@ -430,7 +477,13 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus) {
 		if (timer) clearInterval(timer);
 		timer = undefined;
 		for (const controller of controllers) controller.abort();
-		ctx?.ui.setFooter(undefined);
+		if (statusOnly) {
+			ctx?.ui.setStatus("usage-openai", undefined);
+			ctx?.ui.setStatus("usage-anthropic", undefined);
+			redraw = undefined;
+		} else {
+			ctx?.ui.setFooter(undefined);
+		}
 		ctx = undefined;
 	});
 }

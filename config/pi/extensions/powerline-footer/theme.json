@@ -1,0 +1,16 @@
+{
+  "colors": {
+    "model": "#f5bde6",
+    "path": "#8bd5ca",
+    "gitClean": "#eed49f",
+    "gitDirty": "#eed49f",
+    "thinkingMedium": "#c6a0f6",
+    "context": "#b7bdf8",
+    "separator": "#8087a2",
+    "border": "#8aadf4"
+  },
+  "icons": {
+    "pi": "π",
+    "context": "\uf17a"
+  }
+}

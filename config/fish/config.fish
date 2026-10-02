@@ -31,6 +31,9 @@ atuin init fish --disable-ai | source
 # Set Neovim as default editor
 set -gx EDITOR nvim
 
+# Enable Nerd Font icons in Pi even when tmux hides the terminal name.
+set -q POWERLINE_NERD_FONTS; or set -gx POWERLINE_NERD_FONTS 1
+
 # Set Starship config directory compatible with new standards
 set -gx STARSHIP_CONFIG ~/.config/starship/config.toml
 

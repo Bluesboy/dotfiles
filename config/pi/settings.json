@@ -1,14 +1,83 @@
 {
-  "defaultProvider": "openrouter",
-  "defaultModel": "openrouter/free",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
+  "defaultTools": [
+    "+grep",
+    "+find",
+    "+ls",
+    "+codemode"
+  ],
+  "quietStartup": true,
+  "terminal": {
+    "showTerminalProgress": true
+  },
   "theme": "catppuccin-tui-macchiato",
   "extensions": [
-    "~/.dotfiles/config/pi/extensions/usage-bars.ts"
+    "~/.dotfiles/config/pi/extensions/thinking-status.ts",
+    "~/.dotfiles/config/pi/extensions/model-picker-shortcut.ts",
+    "~/.dotfiles/config/pi/extensions/context-status.ts",
+    "~/.dotfiles/config/pi/extensions/usage-bars-powerline.ts"
   ],
+  "powerline": {
+    "preset": "full",
+    "placement": "above",
+    "separator": "powerline-thin",
+    "welcome": false,
+    "model": {
+      "display": "name"
+    },
+    "path": {
+      "mode": "basename"
+    },
+    "customItems": [
+      {
+        "id": "context-bar",
+        "statusKey": "context-bar",
+        "selfColorize": true,
+        "excludeFromExtensionStatuses": true
+      },
+      {
+        "id": "thinking-brain",
+        "statusKey": "thinking-brain",
+        "color": "#c6a0f6",
+        "excludeFromExtensionStatuses": true
+      },
+      {
+        "id": "usage-openai",
+        "statusKey": "usage-openai",
+        "selfColorize": true,
+        "excludeFromExtensionStatuses": true
+      },
+      {
+        "id": "usage-anthropic",
+        "statusKey": "usage-anthropic",
+        "selfColorize": true,
+        "excludeFromExtensionStatuses": true
+      }
+    ],
+    "layout": {
+      "left": [
+        "model",
+        "custom:thinking-brain",
+        "path",
+        "git",
+        "custom:context-bar",
+        "extension_statuses"
+      ],
+      "right": ["custom:usage-openai", "custom:usage-anthropic"],
+      "secondary": []
+    },
+    "queue": {
+      "compactPromptMode": "native"
+    }
+  },
   "packages": [
     "npm:pi-catppuccin-tui",
-    "npm:pi-claude-bridge"
+    "npm:pi-claude-bridge",
+    "npm:plan-mode-lite@0.1.7",
+    "npm:pi-powerline-footer",
+    "npm:@aleradev12/pi-model-picker@1.0.3"
   ],
-  "lastChangelogVersion": "0.99.1"
+  "lastChangelogVersion": "1.0.0"
 }
