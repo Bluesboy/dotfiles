@@ -1,11 +1,20 @@
 gui:
   language: en
   tabWidth: 2
+  nerdFontsVersion: "3"
+  showDivergenceFromBaseBranch: arrowAndNumber
+  showCommandLog: false
 git:
   disableForcePushing: true
   diffRenderers:
     - type: rawGit
       args: [--pretty=medium]
+      name: default
+    - command: delta --dark --paging=never
+    - type: extDiff
+      command: difft --color=always --context={{diffContext}}
+os:
+  editPreset: nvim
 customCommands:
   - key: '<c-g>'
     context: 'global'
