@@ -428,6 +428,8 @@ window-rule {
 window-rule {
     match app-id="^org.telegram.desktop$"
     exclude app-id="^org.telegram.desktop$" title="^Media viewer$"
+    // File dialogs must follow the parent window, not jump to "messengers".
+    exclude app-id="^org.telegram.desktop$" title="^Choose Files$"
     open-on-workspace "messengers"
     open-maximized true
 }
