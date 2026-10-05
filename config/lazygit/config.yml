@@ -3,7 +3,10 @@ gui:
   tabWidth: 2
 git:
   disableForcePushing: true
+  diffRenderers:
+    - type: rawGit
+      args: [--pretty=medium]
 customCommands:
-- key: '<c-g>'
-  context: 'global'
-  command: 'gh browse'
+  - key: '<c-g>'
+    context: 'global'
+    command: 'gh browse'
