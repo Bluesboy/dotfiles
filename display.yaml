@@ -27,6 +27,21 @@
       state: present
     become: true
 
+  - name: "Install DDC/CI monitor control tools"
+    community.general.pacman:
+      name:
+      - ddcutil # Query and control monitor settings using DDC/CI
+      - ddcui # Graphical interface for DDC/CI monitor settings
+      state: present
+    become: true
+
+  - name: "Enable I2C device access for DDC/CI"
+    community.general.modprobe:
+      name: i2c_dev
+      state: present
+      persistent: present
+    become: true
+
   - name: "Install Wayland"
     community.general.pacman:
       name:
@@ -302,6 +317,28 @@
       owner: "{{ ansible_facts['user_uid'] }}"
       group: "{{ ansible_facts['user_gid'] }}"
     loop: "{{ configs }}"
+
+  - name: "Symlink monitor settings user units"
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/config/systemd/user/{{ item }}"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/{{ item }}"
+      state: link
+      owner: "{{ ansible_facts['user_uid'] }}"
+      group: "{{ ansible_facts['user_gid'] }}"
+    loop:
+    - gammastep-asus.service
+    - monitor-settings.service
+
+  - name: "Enable monitor settings user services"
+    ansible.builtin.systemd_service:
+      name: "{{ item }}"
+      enabled: true
+      state: started
+      scope: user
+      daemon_reload: true
+    loop:
+    - gammastep-asus.service
+    - monitor-settings.service
 
   handlers:
   - name: "Reload systemd"

@@ -506,19 +506,19 @@ window-rule {
 }
 
 workspace "main" {
-  open-on-output "DP-2"
+  open-on-output "PNP(AOC) U2790B 0x00021779"
 }
 
 workspace "scratch" {
-  open-on-output "DP-2"
+  open-on-output "PNP(AOC) U2790B 0x00021779"
 }
 
 workspace "messengers" {
-  open-on-output "HDMI-A-1"
+  open-on-output "ASUSTek COMPUTER INC VA27D N6LMQS159649"
 }
 
 workspace "misc" {
-  open-on-output "HDMI-A-2"
+  open-on-output "ASUSTek COMPUTER INC VA27D N6LMQS159649"
 }
 
 spawn-at-startup "opera"
@@ -823,21 +823,15 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-output "HDMI-A-1" {
-    mode "1920x1080@60.000"
-    scale 1
+output "PNP(AOC) U2790B 0x00021779" {
+    mode "3840x2160@59.997"
+    scale 2
     position x=0 y=0
-}
-
-output "DP-2" {
-    mode "1920x1080@60.000"
-    scale 1
-    position x=1920 y=0
     focus-at-startup
 }
 
-output "HDMI-A-2" {
+output "ASUSTek COMPUTER INC VA27D N6LMQS159649" {
     mode "1920x1080@60.000"
     scale 1
-    position x=3840 y=0
+    position x=1920 y=0
 }

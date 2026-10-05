@@ -1,0 +1,13 @@
+[Unit]
+Description=Colour temperature and gamma adjustment for ASUS monitor
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/gammastep -c %h/.config/gammastep/asus.ini
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

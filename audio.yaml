@@ -6,6 +6,7 @@
     configs:
     - pipewire
     - wiremix
+    - wireplumber
 
   tasks:
   - name: "Create symlinks for application configurations"

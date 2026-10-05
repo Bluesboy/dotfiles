@@ -1,0 +1,17 @@
+[Unit]
+Description=Apply hardware brightness and contrast to desktop monitors
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ddcutil --mfg AOC --model U2790B setvcp 10 35
+ExecStart=/usr/bin/ddcutil --mfg AOC --model U2790B setvcp 12 50
+ExecStart=/usr/bin/ddcutil --mfg AUS --model VA27D --sn N6LMQS159649 setvcp 10 70
+ExecStart=/usr/bin/ddcutil --mfg AUS --model VA27D --sn N6LMQS159649 setvcp 12 65
+TimeoutStartSec=60
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target

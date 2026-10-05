@@ -7,6 +7,15 @@ char_set = "solid"
 # Only sample peaks of visible nodes, the mixer lives in a popup anyway
 lazy_capture = true
 
+# Monitor outputs share one GPU device; use individual node descriptions.
+[[names.overrides]]
+types = [ "endpoint" ]
+matches = [
+  { "node.name" = "alsa_output.pci-0000_01_00.1.pro-output-9" },
+  { "node.name" = "alsa_output.pci-0000_01_00.1.pro-output-11" },
+]
+templates = [ "{node:node.description}" ]
+
 # Catppuccin Macchiato, see https://catppuccin.com/palette
 [themes.catppuccin_macchiato]
 default_device = { fg = "#a6da95" }
