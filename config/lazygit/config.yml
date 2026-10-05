@@ -8,7 +8,9 @@ git:
   disableForcePushing: true
   diffRenderers:
     - type: rawGit
-      args: [--pretty=medium]
+      # Colored header, subject and body; git's format.pretty hides the body.
+      args:
+        - '--pretty=format:%C(yellow)commit %H%C(auto)%d%Creset%n%C(blue)Author: %an <%ae>%nDate:   %ad%Creset%n%n%C(bold green)%w(0,4,4)%s%w(0,0,0)%Creset%n%C(#f4dbd6)%w(0,4,4)%+b%w(0,0,0)%Creset'
       name: default
     - command: delta --dark --paging=never
     - type: extDiff
