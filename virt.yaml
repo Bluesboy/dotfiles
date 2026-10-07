@@ -53,6 +53,7 @@
       name:
       - kubecolor # Colorize your kubectl output
       - kubefwd-bin # kubefwd is a command line utility built to port forward some or all pods within a Kubernetes namespace.
+      - sofka # Kubernetes TUI, reimagined in Rust
       use: "{{ aur_helper }}"
       state: present
     become: true
