@@ -65,7 +65,10 @@
         "custom:context-bar",
         "extension_statuses"
       ],
-      "right": ["custom:usage-openai", "custom:usage-anthropic"],
+      "right": [
+        "custom:usage-openai",
+        "custom:usage-anthropic"
+      ],
       "secondary": []
     },
     "queue": {
@@ -79,5 +82,5 @@
     "npm:pi-powerline-footer",
     "npm:@aleradev12/pi-model-picker@1.0.3"
   ],
-  "lastChangelogVersion": "1.0.0"
+  "lastChangelogVersion": "1.0.4"
 }
