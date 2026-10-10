@@ -66,9 +66,9 @@ fish_add_path -gm ~/.cargo/bin
 # Do not display greeting
 functions -e fish_greeting
 
-# Bind Yazi start to CTRL+Y
+# Bind Yazi start to CTRL+O and repaint the prompt after leaving the TUI.
 function fish_user_key_bindings
-  bind -M insert \co 'y'
+  bind -M insert \co 'y; commandline -f repaint'
 end
 
 # Setup abbreviations

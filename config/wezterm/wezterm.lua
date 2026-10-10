@@ -53,9 +53,8 @@ config.animation_fps = 60
 -- matching its '*-256color:RGB' override, and truecolor would regress silently.
 config.term = "wezterm"
 
--- tmux already runs extended-keys with the csi-u format; this closes the chain
--- so nvim can tell CTRL+I from Tab and CTRL+Enter from Enter.
-config.enable_kitty_keyboard = true
+-- Disabled: Delete is decoded as CTRL+H by fish outside tmux when enabled.
+config.enable_kitty_keyboard = false
 
 -- Quality of life
 
