@@ -6,7 +6,6 @@
     configs:
     - gammastep
     - niri
-    - rofi
     - vicinae
     - xdg-desktop-portal
 
@@ -120,22 +119,6 @@
       mode: "0755"
       owner: "{{ ansible_facts['user_uid'] }}"
       group: "{{ ansible_facts['user_gid'] }}"
-
-  - name: "Install Rofi"
-    community.general.pacman:
-      name:
-      - rofi # A window switcher, application launcher and dmenu replacement
-      state: present
-    become: true
-
-  - name: "Pinentry for Rofi"
-    kewlfft.aur.aur:
-      name:
-      - pinentry-rofi # rofi-based pinentry implementation
-      use: "{{ aur_helper }}"
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
 
   - name: "Install Vicinae"
     kewlfft.aur.aur:
