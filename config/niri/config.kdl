@@ -299,8 +299,6 @@ window-rule {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-// This line starts waybar, a commonly used bar for Wayland compositors.
-
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
@@ -370,7 +368,7 @@ window-rule {
 }
 
 window-rule {
-    // wiremix popup started from the waybar wireplumber module
+    // Floating wiremix audio mixer popup
     match app-id="^wiremix$"
     // Otherwise the focus ring fill shows through the translucent window
     draw-border-with-background false
@@ -522,8 +520,7 @@ workspace "misc" {
 }
 
 spawn-at-startup "opera"
-// wpaperd runs as a user service so systemd restarts it when it crashes.
-// Tray apps wait for waybar's StatusNotifierWatcher before launching, otherwise
+// Tray apps wait for Noctalia's StatusNotifierWatcher before launching, otherwise
 // Electron apps (Slack, Element) lose their tray icon in the startup race.
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh Telegram"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh element-desktop"
@@ -835,3 +832,5 @@ output "ASUSTek COMPUTER INC VA27D N6LMQS159649" {
     scale 1
     position x=1920 y=0
 }
+
+include "noctalia.kdl"

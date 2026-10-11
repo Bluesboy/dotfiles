@@ -1,0 +1,18 @@
+[Unit]
+Description=Noctalia desktop shell
+Documentation=https://docs.noctalia.dev/
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/noctalia
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=20
+
+[Install]
+WantedBy=graphical-session.target

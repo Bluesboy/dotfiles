@@ -1,0 +1,52 @@
+# Keep Vicinae and gammastep alongside the Noctalia desktop shell.
+[shell]
+lang = "ru"
+font_family = "UbuntuMono Nerd Font"
+clipboard_enabled = false
+polkit_agent = false
+telemetry_enabled = false
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Nord"
+
+[theme.templates]
+enable_builtin_templates = false
+enable_community_templates = false
+
+[bar.main]
+position = "top"
+thickness = 34
+margin_ends = 8
+margin_edge = 8
+start = ["workspaces"]
+center = ["clock"]
+end = ["media", "tray", "notifications", "network", "bluetooth", "volume", "brightness", "keyboard_layout", "control-center", "session"]
+
+[notification]
+enable_daemon = true
+follow_focused_output = true
+
+[osd]
+follow_focused_output = true
+
+[wallpaper]
+directory = "~/Pictures/wallpapers"
+
+[wallpaper.automation]
+enabled = true
+interval_seconds = 30
+order = "random"
+
+[nightlight]
+enabled = false
+
+[idle.behavior.lock]
+enabled = false
+
+[idle.behavior.screen-off]
+enabled = false
+
+[dock]
+enabled = false

@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # Launch a tray application only after the StatusNotifierWatcher (tray host)
 # owns its D-Bus name. Electron apps (Slack, Element) register their SNI tray
-# item exactly once at startup and never retry, so if they start before waybar
+# item exactly once at startup and never retry, so if they start before Noctalia
 # has registered the watcher their tray icon is lost for the whole session.
 #
 # `gdbus wait` blocks until the name appears and returns immediately if it is

@@ -5,14 +5,9 @@
   vars:
     configs:
     - gammastep
-    - hypr
-    - mako
     - niri
     - rofi
     - vicinae
-    - waybar
-    - wpaperd
-    - ai-quota-waybar
     - xdg-desktop-portal
 
   tasks:
@@ -118,39 +113,6 @@
 
   # UI components
 
-  - name: "Install Waybar"
-    community.general.pacman:
-      name:
-      - waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
-      state: present
-    become: true
-
-  - name: "Install wttrbar"
-    kewlfft.aur.aur:
-      name:
-      - wttrbar-bin # Weather indicator for Waybar
-      use: "{{ aur_helper }}"
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
-
-  - name: "Install AI Usage Waybar Plugins"
-    kewlfft.aur.aur:
-      name:
-      - codexbar
-      - ai-quota-waybar-git
-      use: "{{ aur_helper }}"
-      state: present
-    become: true
-    become_user: "{{ aur_builder_user }}"
-
-  - name: "Install wpaperd"
-    community.general.pacman:
-      name:
-      - wpaperd # Modern wallpaper daemon for Wayland
-      state: present
-    become: true
-
   - name: "Create the user unit directory"
     ansible.builtin.file:
       path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
@@ -158,24 +120,6 @@
       mode: "0755"
       owner: "{{ ansible_facts['user_uid'] }}"
       group: "{{ ansible_facts['user_gid'] }}"
-
-  # The package ships no unit, and wpaperd 1.3.0 dies on output hotplug,
-  # so it runs as a user service that restarts instead of a niri spawn.
-  - name: "Symlink the wpaperd user unit"
-    ansible.builtin.file:
-      src: "{{ playbook_dir }}/config/systemd/user/wpaperd.service"
-      dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/wpaperd.service"
-      state: link
-      owner: "{{ ansible_facts['user_uid'] }}"
-      group: "{{ ansible_facts['user_gid'] }}"
-
-  - name: "Enable wpaperd"
-    ansible.builtin.systemd:
-      name: wpaperd
-      state: started
-      enabled: true
-      scope: user
-      daemon_reload: true
 
   - name: "Install Rofi"
     community.general.pacman:
@@ -209,36 +153,7 @@
       enabled: true
       scope: user
 
-  - name: "Install mako"
-    community.general.pacman:
-      name:
-      - mako # Lightweight notification daemon for Wayland
-      state: present
-    become: true
-
-  - name: "Enable mako for the niri user session"
-    ansible.builtin.systemd_service:
-      name: mako.service
-      scope: user
-      enabled: true
-      state: started
-
-  # Idle and color temperature
-
-  - name: "Install hypridle"
-    community.general.pacman:
-      name:
-      - hypridle # Idle management daemon for Wayland
-      - hyprland-protocols # Wayland protocol extensions for Hyprland
-      state: present
-    become: true
-
-  - name: "Enable hypridle"
-    ansible.builtin.systemd:
-      name: hypridle
-      state: started
-      enabled: true
-      scope: user
+  # Color temperature
 
   - name: "Install gammastep"
     community.general.pacman:
@@ -339,6 +254,39 @@
     loop:
     - gammastep-asus.service
     - monitor-settings.service
+
+  # Noctalia is the graphical-session shell.
+  - name: "Install Noctalia"
+    community.general.pacman:
+      name: noctalia
+      state: present
+    become: true
+
+  - name: "Create the Noctalia user configuration directory"
+    ansible.builtin.file:
+      path: "{{ ansible_facts['user_dir'] }}/.config/noctalia"
+      state: directory
+      mode: "0755"
+
+  - name: "Symlink Noctalia configuration"
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/config/noctalia/config.toml"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/noctalia/config.toml"
+      state: link
+
+  - name: "Symlink the Noctalia user unit"
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/config/systemd/user/noctalia.service"
+      dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/noctalia.service"
+      state: link
+
+  - name: "Enable Noctalia for the graphical session"
+    ansible.builtin.systemd_service:
+      name: noctalia.service
+      scope: user
+      enabled: true
+      state: started
+      daemon_reload: true
 
   handlers:
   - name: "Reload systemd"
