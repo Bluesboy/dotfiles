@@ -6,6 +6,10 @@ clipboard_enabled = false
 polkit_agent = false
 telemetry_enabled = false
 
+[shell.keyboard_layout.custom_labels]
+"English (US)" = "🇺🇸"
+"Russian" = "🇷🇺"
+
 [theme]
 mode = "dark"
 source = "builtin"
@@ -23,6 +27,9 @@ margin_edge = 8
 start = ["workspaces"]
 center = ["clock"]
 end = ["media", "tray", "notifications", "network", "bluetooth", "volume", "brightness", "keyboard_layout", "control-center", "session"]
+
+[widget.keyboard_layout]
+show_glyph = false
 
 [notification]
 enable_daemon = true
