@@ -7,6 +7,7 @@
     - alacritty
     - mpv
     - pass-git-helper
+    - strata
     - flameshot
     - wezterm
     - zathura
@@ -52,6 +53,14 @@
       - wezterm # A GPU-accelerated cross-platform terminal emulator and multiplexer
       state: present
     become: true
+
+  - name: "Install Strata"
+    kewlfft.aur.aur:
+      name: strata-bin # A fast, keyboard-first file manager for Linux
+      use: "{{ aur_helper }}"
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
 
   - name: "Install Pass"
     community.general.pacman:
