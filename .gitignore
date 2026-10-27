@@ -8,7 +8,7 @@ config/yazi/plugins/*
 !/config/yazi/plugins/tmux-subpane.yazi/
 config/yazi/*.toml-*
 config/wezterm/tmp
-config/yazi/flavors/catppuccin-macchiato.yazi
+config/yazi/flavors/nord.yazi
 .ansible/
 /config/lazygit/github_pull_requests.json
 /config/niri/noctalia.kdl
