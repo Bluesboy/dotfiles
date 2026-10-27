@@ -17,5 +17,30 @@
       "dark": {
          "name": "catppuccin-macchiato"
       }
+   },
+   "providers": {
+      "calculator": {
+         "preferences": {
+            "backend": "numen"
+         }
+      },
+      "files": {
+         "preferences": {
+            "autoIndexing": true,
+            "indexingPaths": [
+               "/home/bluesboy"
+            ],
+            "excludedIndexingPaths": []
+         }
+      },
+      "snippets": {
+         "preferences": {
+            "enabled": true,
+            "undo": true,
+            "layout": "",
+            "prePasteDelay": "0",
+            "keyDelay": "2"
+         }
+      }
    }
 }
