@@ -12,8 +12,8 @@ set -g fish_cursor_insert line blink
 set -g fish_cursor_replace_one underscore blink
 set -g fish_cursor_visual block blink
 
-#Set Catpuccin Macchiato theme
-fish_config theme choose "catppuccin-macchiato"
+#Set Nord theme
+fish_config theme choose "nord"
 
 # Initialize Starship prompt
 starship init fish | source

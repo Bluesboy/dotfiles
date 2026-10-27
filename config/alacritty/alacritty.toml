@@ -1,6 +1,6 @@
 [general]
 import = [
-  "~/.config/alacritty/catppuccin-macchiato.toml"
+  "~/.config/alacritty/nord.toml"
 ]
 
 [bell]

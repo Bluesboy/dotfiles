@@ -6,7 +6,7 @@ local act = wezterm.action
 
 -- Appearance
 
-config.color_scheme = "Catppuccin Macchiato"
+config.color_scheme = "nord"
 config.font = wezterm.font("Ioskeley Mono Nerd Font", { weight = "Regular" })
 config.font_size = 13.5
 

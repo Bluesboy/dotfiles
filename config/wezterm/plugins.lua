@@ -147,7 +147,7 @@ function M.apply_to_config(config)
   tabline.setup({
     options = {
       icons_enabled = true,
-      theme = "Catppuccin Macchiato",
+      theme = "nord",
       tabs_enabled = true,
       theme_overrides = {},
       section_separators = {

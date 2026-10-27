@@ -15,7 +15,7 @@
    ],
    "theme": {
       "dark": {
-         "name": "catppuccin-macchiato"
+         "name": "nord"
       }
    },
    "providers": {

@@ -1,5 +1,5 @@
 mode = "theme"
-theme = "catppuccin-macchiato"
+theme = "nord"
 omarchy_variant = "original"
 folder_peeking = false
 single_click_previews = true
