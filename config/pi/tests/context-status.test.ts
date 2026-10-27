@@ -38,7 +38,7 @@ test("context bar updates after responses and compaction, clears on shutdown, an
 		ui: {
 			setStatus: (key: string, value?: string) => { assert.equal(key, "context-bar"); status = value; },
 			theme: {
-				colors: { success: parseColor("#a6da95"), warning: parseColor("#eed49f"), error: parseColor("#ed8796"), dim: parseColor("#8087a2") },
+				colors: { success: parseColor("#a3be8c"), warning: parseColor("#ebcb8b"), error: parseColor("#bf616a"), dim: parseColor("#616e88") },
 				style: (text: string) => { styles.push(text); return text; },
 			},
 		},

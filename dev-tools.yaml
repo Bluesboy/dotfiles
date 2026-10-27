@@ -27,6 +27,7 @@
     loop:
     - .pi/agent
     - .pi/agent/prompts
+    - .pi/agent/themes
     - .pi/agent/extensions/powerline-footer
 
   - name: "Create symlinks for Pi configuration files"
@@ -44,6 +45,7 @@
     - plan-mode-lite.json
     - new-model-picker.json
     - extensions/powerline-footer/theme.json
+    - themes/nord.json
     - prompts/k8s-audit.md
     - prompts/plan-task.md
     - prompts/review.md

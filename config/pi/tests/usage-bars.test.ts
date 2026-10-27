@@ -168,7 +168,7 @@ async function harness(mode = "tui", colors = false, gitReader?: (cwd: string, s
 		},
 		ui: {
 			theme: {
-				colors: { success: parseColor("#a6da95"), warning: parseColor("#eed49f"), error: parseColor("#ed8796"), dim: parseColor("#8087a2") },
+				colors: { success: parseColor("#a3be8c"), warning: parseColor("#ebcb8b"), error: parseColor("#bf616a"), dim: parseColor("#616e88") },
 				fg: (color: string, text: string) => {
 					foreground.push({ color, text });
 					return colors ? `\x1b[32m${text}\x1b[0m` : text;
@@ -253,17 +253,17 @@ test("one row shows context, output/input tokens, model with effort icon, path a
 		assert.ok(ui.foreground.some(({ color, text }) => color === "success" && text === "  main"));
 		assert.ok(ui.foreground.some(({ color, text }) => color === "muted" && text === " ◈ medium"));
 		assert.doesNotMatch(wide, /[█░↻]/);
-		assert.ok(ui.styled.some(({ background, color }) => background === "#91d7e3" && color === "#24273a"), "filled quota inverts its foreground/background");
+		assert.ok(ui.styled.some(({ background, color }) => background === "#88c0d0" && color === "#2e3440"), "filled quota inverts its foreground/background");
 		await ui.thinking("high");
 		assert.match(stripVTControlCharacters(ui.lines(80)[0]), /^ *25% +1\.5k\/6k +test-model ◈ high /);
-		assert.ok(ui.styled.some(({ background, color }) => background !== undefined && color === "#a6da95"), "context percentage remains inside a colored track");
+		assert.ok(ui.styled.some(({ background, color }) => background !== undefined && color === "#a3be8c"), "context percentage remains inside a colored track");
 		assert.equal(requests, 2, "effort change does not refetch fresh quotas");
 		assert.deepEqual(ui.lines(0), [""]);
-		assert.ok(ui.styled.some(({ text, color }) => text.includes("6%") && color === "#91d7e3"));
-		assert.ok(ui.styled.some(({ text, color }) => text.includes("80%") && color === "#8aadf4"));
-		assert.ok(ui.styled.some(({ text, color }) => text.includes("12%") && color === "#f5a97f"));
+		assert.ok(ui.styled.some(({ text, color }) => text.includes("6%") && color === "#88c0d0"));
+		assert.ok(ui.styled.some(({ text, color }) => text.includes("80%") && color === "#81a1c1"));
+		assert.ok(ui.styled.some(({ text, color }) => text.includes("12%") && color === "#d08770"));
 		const weeklyOrange = ui.styled.find(({ text }) => text.includes("95%"))!.color;
-		assert.notEqual(weeklyOrange, "#f5a97f");
+		assert.notEqual(weeklyOrange, "#d08770");
 		const [red, green, blue] = weeklyOrange.slice(1).match(/../g)!.map((value) => parseInt(value, 16));
 		assert.ok(red > green && green > blue, "weekly Anthropic hue is also orange");
 	} finally {
@@ -415,12 +415,12 @@ test("Powerline mode publishes colored quotas, without owning the footer or poll
 			assert.ok(Math.abs(plain.length - plain.trimEnd().length - (plain.length - plain.trimStart().length)) <= 1, "the complete label is centered");
 		}
 		const { colorToHex, mixColors, parseColor } = await import("@earendil-works/pi-tui");
-		for (const [bright, shortFill, weeklyFill] of [["#91d7e3", 2, 20], ["#f5a97f", 3, 23]] as const) {
-			const dark = colorToHex(mixColors(parseColor(bright), parseColor("#24273a"), 0.3));
+		for (const [bright, shortFill, weeklyFill] of [["#88c0d0", 2, 20], ["#d08770", 3, 23]] as const) {
+			const dark = colorToHex(mixColors(parseColor(bright), parseColor("#2e3440"), 0.3));
 			const brightness = (hex: string) => hex.slice(1).match(/../g)!.reduce((sum, part) => sum + parseInt(part, 16), 0);
 			assert.ok(brightness(dark) < brightness(bright), "weekly track is darker for each provider");
-			assert.ok(ui.styled.some(({ text, color, background }) => background === bright && color === "#24273a" && text.length === shortFill), "short-window fill follows its own percentage");
-			assert.ok(ui.styled.some(({ text, color, background }) => background === dark && color === "#24273a" && text.length === weeklyFill), "weekly fill follows its own percentage");
+			assert.ok(ui.styled.some(({ text, color, background }) => background === bright && color === "#2e3440" && text.length === shortFill), "short-window fill follows its own percentage");
+			assert.ok(ui.styled.some(({ text, color, background }) => background === dark && color === "#2e3440" && text.length === weeklyFill), "weekly fill follows its own percentage");
 		}
 		assert.ok(ui.styled.filter(({ text }) => text.includes("%")).every(({ background }) => background !== undefined), "percentages are rendered inside colored tracks, not outside");
 		assert.doesNotMatch(openaiStatus + anthropicStatus, /test-oauth-token|5h|7d|OpenAI|Anthropic/);

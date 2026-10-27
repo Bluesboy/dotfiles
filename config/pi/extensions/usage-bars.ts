@@ -217,12 +217,13 @@ async function requestHeaders(ctx: ExtensionContext, provider: Provider): Promis
 export default async function (pi: ExtensionAPI, readGit = queryGitStatus, options: { statusOnly?: boolean } = {}) {
 	const statusOnly = options.statusOnly === true;
 	const { mixColors, parseColor, truncateToWidth, visibleWidth } = await import("@earendil-works/pi-tui");
-	const base = parseColor("#24273a");
-	const peach = parseColor("#f5a97f");
-	// Macchiato hues distinguish providers and their short/weekly windows.
+	const base = parseColor("#2e3440");
+	const orange = parseColor("#d08770");
+	// Nord hues distinguish providers and their short/weekly windows. The weekly
+	// orange darkens toward black: Nord's muted orange drifts to pink over nord0.
 	const quotaColors = {
-		openai: [parseColor("#91d7e3"), parseColor("#8aadf4")],
-		anthropic: [peach, mixColors(peach, parseColor("#24273a"), 0.2)],
+		openai: [parseColor("#88c0d0"), parseColor("#81a1c1")],
+		anthropic: [orange, mixColors(orange, parseColor("#000000"), 0.2)],
 	};
 	const states: Record<Provider, State> = {
 		openai: { quotas: [], nextAt: 0, retryAt: 0 },
@@ -436,7 +437,7 @@ export default async function (pi: ExtensionAPI, readGit = queryGitStatus, optio
 		ctx = context;
 		stopped = false;
 		installFooter(context);
-		// Install again after other session_start handlers (e.g. Catppuccin's optional footer).
+		// Install again after other session_start handlers (e.g. a theme package's optional footer).
 		void refreshAll().then(() => { if (!stopped && ctx) installFooter(ctx); });
 		void refreshGit(true);
 		if (timer) clearInterval(timer);

@@ -12,7 +12,7 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "theme": "catppuccin-tui-macchiato",
+  "theme": "nord",
   "extensions": [
     "~/.dotfiles/config/pi/extensions/thinking-status.ts",
     "~/.dotfiles/config/pi/extensions/model-picker-shortcut.ts",
@@ -40,7 +40,7 @@
       {
         "id": "thinking-brain",
         "statusKey": "thinking-brain",
-        "color": "#c6a0f6",
+        "color": "#b48ead",
         "excludeFromExtensionStatuses": true
       },
       {
@@ -76,7 +76,6 @@
     }
   },
   "packages": [
-    "npm:pi-catppuccin-tui",
     "npm:pi-claude-bridge",
     "npm:plan-mode-lite@0.1.7",
     "npm:pi-powerline-footer",

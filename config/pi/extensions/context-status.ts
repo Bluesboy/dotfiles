@@ -14,7 +14,7 @@ export function contextStatus(usage: ContextUsage | undefined, fallbackWindow?: 
 
 export default async function (pi: ExtensionAPI): Promise<void> {
 	const { mixColors, parseColor } = await import("@earendil-works/pi-tui");
-	const base = parseColor("#24273a");
+	const base = parseColor("#2e3440");
 	const update = (_event: unknown, ctx: ExtensionContext): void => {
 		if (ctx.mode !== "tui") return;
 		const { label, percent, color } = contextStatus(ctx.getContextUsage(), ctx.model?.contextWindow);
