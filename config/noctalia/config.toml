@@ -1,10 +1,15 @@
 # Keep Vicinae and gammastep alongside the Noctalia desktop shell.
+# Wallpaper choice stays in ~/.local/state/noctalia/settings.toml (machine state).
 [shell]
 lang = "ru"
 font_family = "UbuntuMono Nerd Font"
 clipboard_enabled = false
 polkit_agent = false
 telemetry_enabled = false
+screen_time_enabled = true
+
+[shell.launcher]
+app_grid = true
 
 [shell.keyboard_layout.custom_labels]
 "English (US)" = "🇺🇸"
@@ -12,20 +17,25 @@ telemetry_enabled = false
 
 [theme]
 mode = "dark"
-source = "builtin"
+source = "wallpaper"
+wallpaper_scheme = "m3-content"
 builtin = "Nord"
+community_palette = "Oxocarbon"
 
 [theme.templates]
-enable_builtin_templates = false
+enable_builtin_templates = true
 enable_community_templates = false
+builtin_ids = ["niri"]
 
 [bar.main]
 position = "top"
-thickness = 34
+thickness = 32
 margin_ends = 8
-margin_edge = 8
-start = ["workspaces"]
-center = ["clock"]
+margin_edge = 3
+margin_opposite_edge = 1
+background_opacity = 0.7
+start = ["workspaces", "active_window"]
+center = ["clock", "date"]
 end = ["media", "tray", "notifications", "network", "bluetooth", "volume", "brightness", "keyboard_layout", "control-center", "session"]
 
 [widget.keyboard_layout]
@@ -40,6 +50,7 @@ follow_focused_output = true
 
 [wallpaper]
 directory = "~/Pictures/wallpapers"
+fill_mode = "stretch"
 
 [wallpaper.automation]
 enabled = true
@@ -49,11 +60,95 @@ order = "random"
 [nightlight]
 enabled = false
 
+[location]
+address = "Уфа, Россия"
+
+[calendar]
+enabled = true
+
+[calendar.account.youngbluesman]
+type = "google"
+
+[idle]
+behavior_order = ["lock", "screen-off"]
+pre_action_fade_seconds = 0
+
 [idle.behavior.lock]
-enabled = false
+action = "lock"
+enabled = true
+timeout = 200.0
 
 [idle.behavior.screen-off]
+action = "screen_off"
+enabled = true
+timeout = 300.0
+
+[lockscreen]
+grace_period_seconds = 10
+
+[lockscreen_widgets]
 enabled = false
+schema_version = 2
+widget_order = ["lockscreen-login-box@HDMI-A-2", "lockscreen-login-box@DP-2"]
+
+[lockscreen_widgets.grid]
+cell_size = 16
+major_interval = 4
+visible = true
+
+[lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+type = "login_box"
+output = "DP-2"
+cx = 960.0
+cy = 898.0
+box_width = 810.0
+box_height = 196.0
+placement_width = 1920.0
+placement_height = 1080.0
+rotation = 0.0
+
+[lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+background_color = "surface_container"
+background_opacity = 0.88
+background_radius = 12.0
+center_password_text = false
+input_opacity = 1.0
+input_radius = 6.0
+layout = "regular"
+show_caps_lock = true
+show_keyboard_layout = true
+show_login_button = true
+show_media = true
+show_session_buttons = true
+show_unlock_hint = true
+show_weather = true
+
+[lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2"]
+type = "login_box"
+output = "HDMI-A-2"
+cx = 960.0
+cy = 898.0
+box_width = 810.0
+box_height = 196.0
+placement_width = 1920.0
+placement_height = 1080.0
+rotation = 0.0
+
+[lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2".settings]
+background_color = "surface_container"
+background_opacity = 0.88
+background_radius = 12.0
+center_password_text = false
+input_opacity = 1.0
+input_radius = 6.0
+layout = "regular"
+show_caps_lock = true
+show_keyboard_layout = true
+show_login_button = true
+show_media = true
+show_session_buttons = true
+show_unlock_hint = true
+show_weather = true
 
 [dock]
 enabled = false
