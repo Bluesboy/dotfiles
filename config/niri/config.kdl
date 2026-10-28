@@ -275,7 +275,6 @@ window-rule {
     open-on-workspace "scratch"
     open-floating true
     open-focused false
-    opacity 0.96
     default-column-width {
         proportion 1.0;
     }

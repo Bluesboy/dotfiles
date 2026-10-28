@@ -7,13 +7,19 @@ local act = wezterm.action
 -- Appearance
 
 config.color_scheme = "nord"
+-- Nord is muted by design; lift text colors a bit without touching the themes.
+config.foreground_text_hsb = {
+  hue = 1.0,
+  saturation = 1.30,
+  brightness = 1.3,
+}
 config.font = wezterm.font("Ioskeley Mono Nerd Font", { weight = "Regular" })
 config.font_size = 13.5
 
 -- The tab bar itself is rendered by the tabline plugin, see plugins.lua.
 config.enable_tab_bar = true
 
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.90
 config.window_padding = {
   left = 0,
   right = 0,
