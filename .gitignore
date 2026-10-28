@@ -6,6 +6,7 @@ roles
 btop.log
 config/yazi/plugins/*
 !/config/yazi/plugins/tmux-subpane.yazi/
+!/config/yazi/plugins/lazygit.yazi/
 config/yazi/*.toml-*
 config/wezterm/tmp
 config/yazi/flavors/nord.yazi
