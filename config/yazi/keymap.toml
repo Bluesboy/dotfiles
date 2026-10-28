@@ -95,7 +95,7 @@ desc = "Calc size of selection or cwd"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "l" ]
-run  = "plugin lazygit"
+run  = "shell --block -- git rev-parse --git-dir >/dev/null 2>&1 && { stty sane; lazygit; }"
 desc = "Run lazygit"
 
 [[mgr.prepend_keymap]]
