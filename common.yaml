@@ -309,6 +309,8 @@
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"
+    notify:
+    - "Generate sesh fish completions"
 
   - name: "Install systemd tools"
     kewlfft.aur.aur:
@@ -347,3 +349,9 @@
       state: present
     become: true
     become_user: "{{ aur_builder_user }}"
+
+  handlers:
+  - name: "Generate sesh fish completions"
+    ansible.builtin.shell:
+      cmd: sesh completion fish > "{{ ansible_facts['user_dir'] }}/.config/fish/completions/sesh.fish"
+    changed_when: true
