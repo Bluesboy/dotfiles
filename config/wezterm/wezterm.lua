@@ -7,12 +7,6 @@ local act = wezterm.action
 -- Appearance
 
 config.color_scheme = "nord"
--- Nord is muted by design; lift text colors a bit without touching the themes.
-config.foreground_text_hsb = {
-  hue = 1.0,
-  saturation = 1.30,
-  brightness = 1.3,
-}
 config.font = wezterm.font("Ioskeley Mono Nerd Font", { weight = "Regular" })
 config.font_size = 13.5
 
