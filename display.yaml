@@ -253,6 +253,21 @@
       state: present
     become: true
 
+  - name: "Install Show Me The Key"
+    community.general.pacman:
+      name: showmethekey # A screenkey alternative that works under Wayland via libinput
+      state: present
+    become: true
+
+  - name: "Require a password for the Show Me The Key backend"
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/config/polkit/49-showmethekey-auth.rules"
+      dest: /etc/polkit-1/rules.d/49-showmethekey-auth.rules
+      owner: root
+      group: root
+      mode: "0644"
+    become: true
+
   - name: "Create the Noctalia user configuration directory"
     ansible.builtin.file:
       path: "{{ ansible_facts['user_dir'] }}/.config/noctalia"

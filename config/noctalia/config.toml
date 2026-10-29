@@ -4,7 +4,7 @@
 lang = "ru"
 font_family = "UbuntuMono Nerd Font"
 clipboard_enabled = false
-polkit_agent = false
+polkit_agent = true
 telemetry_enabled = false
 screen_time_enabled = true
 

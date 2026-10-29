@@ -1,0 +1,8 @@
+// Require the admin password for the showmethekey keylogger backend.
+// The package rule allows wheel without a password; this file sorts before
+// it, so polkit uses this result first.
+polkit.addRule(function (action, subject) {
+  if (action.id === "one.alynx.showmethekey.cli") {
+    return polkit.Result.AUTH_ADMIN_KEEP;
+  }
+});
