@@ -245,6 +245,14 @@
       state: present
     become: true
 
+  - name: "Install Noctalia screen recorder plugin dependencies"
+    community.general.pacman:
+      name:
+      - gpu-screen-recorder # A shadowplay-like screen recorder for Linux
+      - slurp # Select a region in a Wayland compositor
+      state: present
+    become: true
+
   - name: "Create the Noctalia user configuration directory"
     ansible.builtin.file:
       path: "{{ ansible_facts['user_dir'] }}/.config/noctalia"

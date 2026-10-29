@@ -36,7 +36,7 @@ margin_opposite_edge = 1
 background_opacity = 0.7
 start = ["workspaces", "active_window"]
 center = ["clock", "noctalia/world_clock:bar", "date"]
-end = ["media", "tray", "notifications", "network", "bluetooth", "volume", "brightness", "keyboard_layout", "control-center", "session"]
+end = ["media", "noctalia/screen_recorder:recorder", "tray", "notifications", "network", "bluetooth", "volume", "brightness", "keyboard_layout", "control-center", "session"]
 
 [widget.keyboard_layout]
 show_glyph = false
@@ -154,4 +154,8 @@ show_weather = true
 enabled = false
 
 [plugins]
-enabled = ["noctalia/world_clock"]
+enabled = ["noctalia/world_clock", "noctalia/screen_recorder"]
+
+# RX 580 VCE hangs the GPU under h264_vaapi (ring vce0 timeout), encode on CPU.
+[plugin_settings."noctalia/screen_recorder"]
+video_encoder = "cpu"
