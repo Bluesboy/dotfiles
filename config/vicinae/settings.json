@@ -13,6 +13,7 @@
    "imports": [
       "./user.jsonc"
    ],
+   "language": "ru",
    "theme": {
       "dark": {
          "name": "nord"
