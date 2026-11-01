@@ -59,9 +59,9 @@ rev = "d6ede98"
 hash = "f6c11dc58d674764a4dd20e644138534"
 
 [[plugin.deps]]
-use = "Bluesboy/yafg"
-rev = "337da9d"
-hash = "6df59101fa8564a3ee82ed899c93e2cd"
+use = "XYenon/yafg"
+rev = "1202b2c"
+hash = "b0046637f995df7323366f26973edeb3"
 
 [[flavor.deps]]
 use = "AdithyanA2005/nord"
