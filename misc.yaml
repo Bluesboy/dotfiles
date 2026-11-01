@@ -146,3 +146,11 @@
       - trippy # A network diagnostic tool
       state: present
     become: true
+
+  - name: "Install Freesm Launcher"
+    kewlfft.aur.aur:
+      name: freesmlauncher # Minecraft launcher with offline accounts support
+      use: "{{ aur_helper }}"
+      state: present
+    become: true
+    become_user: "{{ aur_builder_user }}"
