@@ -5,27 +5,27 @@ hash = "3c66d95bf63fa16178e98967fbae9429"
 
 [[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
-rev = "8bb639d"
-hash = "8c5f14c09c981a496afaab5184e4aa08"
+rev = "98baba6"
+hash = "c5292f37d73d0a8f301cc138a51baedf"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "c591a36"
-hash = "5bb0bfab901d3601c370eafdd66edd31"
+rev = "25d992d"
+hash = "347cc6b190eb0c2fd60513cc7ae37412"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:lsar"
-rev = "c591a36"
+rev = "25d992d"
 hash = "c1c66e28145e28e581e74e2d6da4fdf1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "c591a36"
-hash = "45a533508a9840cc5a10cf6129f63e6a"
+rev = "25d992d"
+hash = "d1e0499cae5f3aeb628c267616d4b682"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "c591a36"
+rev = "25d992d"
 hash = "187cc58ba7ac3befd49c342129e6f1b6"
 
 [[plugin.deps]]
@@ -35,13 +35,13 @@ hash = "9776f378459072b6c2875eae5addc49d"
 
 [[plugin.deps]]
 use = "iynaix/time-travel"
-rev = "aaec6e2"
-hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
+rev = "1cd63a0"
+hash = "4f75208f47a25a09d8062da5d31553db"
 
 [[plugin.deps]]
 use = "pirafrank/what-size"
-rev = "ec94d9a"
-hash = "4b546f609ab8630a083cecf9ab5091d2"
+rev = "1cb456f"
+hash = "7699acf73a1079f8a4afef5cec84ce73"
 
 [[plugin.deps]]
 use = "larry-oates/open-git-remote"
@@ -55,8 +55,8 @@ hash = "c238595c801caa4f28553b9af8cf8804"
 
 [[plugin.deps]]
 use = "WhoSowSee/whoosh"
-rev = "43f3202"
-hash = "da14dfe482886e756150ae4f5c2bb23"
+rev = "d6ede98"
+hash = "f6c11dc58d674764a4dd20e644138534"
 
 [[plugin.deps]]
 use = "Bluesboy/yafg"
