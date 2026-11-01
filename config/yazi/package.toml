@@ -64,6 +64,6 @@ rev = "337da9d"
 hash = "6df59101fa8564a3ee82ed899c93e2cd"
 
 [[flavor.deps]]
-use = "Bluesboy/nord"
-rev = "3e7a2f0"
+use = "AdithyanA2005/nord"
+rev = "5bafa82"
 hash = "5b64f098ab4b867de90561685c8f9b32"
