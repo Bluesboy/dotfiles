@@ -48,12 +48,46 @@
       - swappy # A Wayland native snapshot editing tool
       - gparted # A Partition Magic clone, frontend to GNU Parted
       - mpv # a free, open source, and cross-platform media player
+      - neovide # No Nonsense Neovim Client in Rust
       - zathura # Minimalistic document viewer
       - zathura-pdf-mupdf # PDF support for Zathura (MuPDF backend) (Supports PDF, ePub, and OpenXPS)
       - zathura-ps # Adds ps support to zathura by using the libspectre library
       - wezterm # A GPU-accelerated cross-platform terminal emulator and multiplexer
       state: present
     become: true
+
+  - name: "Set Neovide as default application for text files"
+    community.general.ini_file:
+      path: "{{ ansible_facts['user_dir'] }}/.config/mimeapps.list"
+      section: "Default Applications"
+      option: "{{ item }}"
+      value: neovide.desktop
+      no_extra_spaces: true
+      owner: "{{ ansible_facts['user_uid'] }}"
+      group: "{{ ansible_facts['user_gid'] }}"
+      mode: "0644"
+    loop:
+    - text/plain
+    - text/markdown
+    - text/x-log
+    - text/csv
+    - text/x-csrc
+    - text/x-chdr
+    - text/x-c++src
+    - text/x-c++hdr
+    - text/x-go
+    - text/x-python
+    - text/x-lua
+    - text/x-makefile
+    - text/x-patch
+    - text/x-tex
+    - text/rust
+    - application/javascript
+    - application/json
+    - application/toml
+    - application/x-shellscript
+    - application/x-yaml
+    - application/xml
 
   - name: "Install Strata"
     kewlfft.aur.aur:
