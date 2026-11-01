@@ -6,6 +6,7 @@
     configs:
     - alacritty
     - mpv
+    - neovide
     - pass-git-helper
     - strata
     - flameshot

@@ -1,0 +1,3 @@
+# Startup message capture temporarily enables ext_messages/ext_cmdline,
+# which makes noice.nvim refuse to start. Let noice handle messages.
+startup-message-capture = false
