@@ -7,6 +7,9 @@
   ff = only
   rebase = true
 
+[fetch]
+  prune = true
+
 [alias]
   lo = log -10
   s = status
