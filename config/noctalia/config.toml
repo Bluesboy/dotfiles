@@ -52,6 +52,12 @@ follow_focused_output = true
 directory = "~/Pictures/wallpapers"
 fill_mode = "stretch"
 
+[wallpaper.monitor.DP-2]
+directory = "~/Pictures/wallpapers"
+
+[wallpaper.monitor.HDMI-A-2]
+directory = "~/Pictures/wallpapers"
+
 [wallpaper.automation]
 enabled = true
 interval_seconds = 30
