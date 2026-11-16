@@ -449,6 +449,12 @@ window-rule {
         }
     }
 }
+
+window-rule {
+    match app-id="^discord$"
+    open-on-workspace "messengers"
+    open-maximized true
+}
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -541,6 +547,7 @@ spawn-at-startup "opera"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh Telegram"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh element-desktop"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh slack"
+spawn-sh-at-startup "~/.config/niri/wait-tray.sh discord"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh thunderbird"
 spawn-sh-at-startup "~/.config/niri/wait-tray.sh flameshot"
 
